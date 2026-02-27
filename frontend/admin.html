@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard - HostelOps</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="top-bar">
+    <h1>🛠 Admin Dashboard</h1>
+    <div class="user-info">
+      <span>Admin Panel</span>
+      <button onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <!-- FILTER -->
+  <div class="filter-section">
+    <label>Filter by Status:</label>
+    <select id="statusFilter" onchange="applyFilter()">
+      <option value="All">All</option>
+      <option value="Pending">Pending</option>
+      <option value="In Progress">In Progress</option>
+      <option value="Resolved">Resolved</option>
+    </select>
+  </div>
+
+  <!-- DASHBOARD STATS -->
+  <div class="stats-container">
+    <div class="stat-card total">
+      <h3>Total</h3>
+      <p id="totalCount">0</p>
+    </div>
+    <div class="stat-card pending">
+      <h3>Pending</h3>
+      <p id="pendingCount">0</p>
+    </div>
+    <div class="stat-card progress">
+      <h3>In Progress</h3>
+      <p id="progressCount">0</p>
+    </div>
+    <div class="stat-card resolved">
+      <h3>Resolved</h3>
+      <p id="resolvedCount">0</p>
+    </div>
+  </div>
+
+  <h2>All Complaints</h2>
+  <div id="complaintList"></div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>

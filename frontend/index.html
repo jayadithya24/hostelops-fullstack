@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HostelOps Complaint System</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="top-bar">
+    <div class="logo-title">
+      <span class="logo">🏨</span>
+      <h1>HostelOps Complaint System</h1>
+    </div>
+
+    <div class="user-info">
+      <span id="userRole"></span>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+
+  <!-- COMPLAINT FORM SECTION -->
+  <section class="container">
+    <form id="complaintForm">
+
+      <input type="text" id="name" placeholder="Your Name" required>
+      
+      <select id="category">
+        <option value="Electrical">Electrical</option>
+        <option value="Plumbing">Plumbing</option>
+        <option value="Furniture">Furniture</option>
+        <option value="Cleanliness">Cleanliness</option>
+      </select>
+
+      <textarea id="description" placeholder="Describe the issue" required></textarea>
+
+      <label for="priority" class="form-label">
+  Select Complaint Urgency
+</label>
+
+<select id="priority">
+  <option value="Low">Low (Not Urgent)</option>
+  <option value="Medium">Medium (Important)</option>
+  <option value="High">High (Urgent)</option>
+</select>
+
+      <button type="submit">Submit Complaint</button>
+
+    </form>
+  </section>
+
+
+  <!-- COMPLAINT LIST SECTION -->
+  <section class="complaints-section">
+    <h2>All Complaints</h2>
+    <div id="complaintList"></div>
+  </section>
+
+
+  <!-- USER ROLE SCRIPT -->
+  <script>
+    const role = localStorage.getItem("role");
+
+    if (role) {
+      document.getElementById("userRole").innerText =
+        role === "admin" ? "Admin Panel" : "Student Panel";
+    }
+  </script>
+
+  <!-- MAIN JS -->
+  <script src="script.js"></script>
+
+</body>
+</html>
