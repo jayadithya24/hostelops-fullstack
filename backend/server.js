@@ -9,7 +9,15 @@ const User = require("./models/User");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:5500",   // for local testing
+    "http://127.0.0.1:5500",
+    "https://gentle-centaur-dc63d9.netlify.app"  // your Netlify URL
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
 app.use(express.json());
 
 /* ===============================
