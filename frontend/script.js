@@ -1,5 +1,5 @@
 (() => {
-
+const API_BASE = "https://hostelops-fullstack.onrender.com";
   /* =========================
      AUTH + ROLE CHECK
   ========================= */
@@ -47,7 +47,7 @@
       };
 
       try {
-        const res = await fetch("http://localhost:5000/api/complaints", {
+        const res = await fetch(`${API_BASE}/api/complaints`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -85,7 +85,7 @@
 
     try {
 
-      let url = "http://localhost:5000/api/complaints";
+      let url = `${API_BASE}/api/complaints`;
 
       if (role === "admin" && statusFilter) {
         const selectedStatus = statusFilter.value;
@@ -179,7 +179,7 @@
     if (role !== "admin") return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/complaints/${id}`, {
+      const res = await fetch(`${API_BASE}/api/complaints/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
