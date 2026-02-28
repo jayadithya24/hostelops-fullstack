@@ -19,7 +19,7 @@ if (registerForm) {
     };
 
     try {
-      const res = await fetch("http://localhost:5000/api/register", {
+      const res = await fetch("https://hostelops-fullstack.onrender.com/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData)
@@ -66,7 +66,7 @@ if (loginForm) {
     };
 
     try {
-      const res = await fetch("http://localhost:5000/api/login", {
+      const res = await fetch("https://hostelops-fullstack.onrender.com/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(loginData)
