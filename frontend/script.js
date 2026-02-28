@@ -23,6 +23,8 @@ const API_BASE = "https://hostelops-fullstack.onrender.com";
     return;
   }
 
+  // ✅ SHOW PAGE ONLY AFTER AUTH CHECK
+document.body.style.display = "block";
   /* =========================
      ELEMENTS
   ========================= */
