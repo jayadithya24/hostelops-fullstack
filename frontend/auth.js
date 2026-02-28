@@ -1,7 +1,7 @@
 /* =========================
    REGISTER
 ========================= */
-
+const API_BASE = "https://hostelops-fullstack.onrender.com";
 const registerForm = document.getElementById("registerForm");
 
 if (registerForm) {
@@ -19,7 +19,7 @@ if (registerForm) {
     };
 
     try {
-      const res = await fetch("https://hostelops-fullstack.onrender.com/api/register", {
+      const res = await fetch(`${API_BASE}/api/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData)
@@ -66,7 +66,7 @@ if (loginForm) {
     };
 
     try {
-      const res = await fetch("https://hostelops-fullstack.onrender.com/api/login", {
+      const res = await fetch(`${API_BASE}/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(loginData)
