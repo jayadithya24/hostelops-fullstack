@@ -24,9 +24,10 @@ h1 {
 
 /* Card Container */
 form {
-  width: 100%;              /* full width */
-  max-width: 100%;          /* remove width restriction */
-  padding: 80px 120px;      /* bigger spacing */
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 50px 40px;
   border-radius: 30px;          /* optional: remove rounded card look */
   background: rgba(255, 255, 255, 0.22);
   backdrop-filter: blur(18px);
@@ -97,8 +98,9 @@ h2::after {
 
 #complaintList {
   width: 100%;
-  padding: 0 80px;   /* spacing from sides */
-  margin-top: 40px;
+  max-width: 1200px;
+  margin: 40px auto 0;
+  padding: 0 20px;
 }
 
 #complaintList div {
@@ -180,7 +182,9 @@ h2::after {
 
 .container {
   width: 100%;
-  padding: 0 80px;   /* adds spacing from sides */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 .filter-section {
   margin: 20px 0;
@@ -244,7 +248,7 @@ h1, h2 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30px 80px;
+  padding: 20px;
 }
 
 /* LOGO + TITLE GROUP */
@@ -328,4 +332,35 @@ h1, h2 {
   color: white;
   font-size: 14px;
   margin-bottom: 6px;
+}
+@media (max-width: 768px) {
+
+  body {
+    padding: 30px 15px;
+  }
+
+  h1 {
+    font-size: 28px;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 24px;
+    margin-top: 50px;
+  }
+
+  form {
+    padding: 30px 20px;
+  }
+
+  .top-bar {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .stats-container {
+    flex-direction: column;
+  }
+
 }
