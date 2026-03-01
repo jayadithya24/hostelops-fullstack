@@ -9,8 +9,9 @@ body {
   min-height: 100vh;
   background: linear-gradient(135deg, #667eea, #764ba2);
   display: flex;
-  flex-direction: column;
-  padding: 60px 20px;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 /* Title */
