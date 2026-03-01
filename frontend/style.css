@@ -7,7 +7,9 @@
 
 body {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: radial-gradient(circle at 30% 20%, #0f2027, #0a0f14 60%);
+  background-color: #0a0f14;
+  color: #e6f1ff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,10 +32,10 @@ form {
   margin: 0 auto;
   padding: 50px 40px;
   border-radius: 30px;          /* optional: remove rounded card look */
-  background: rgba(255, 255, 255, 0.22);
-  backdrop-filter: blur(18px);
-  border: 1px solid rgba(255,255,255,0.3);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+  background: rgba(255, 255, 255, 0.05);
+backdrop-filter: blur(12px);
+border: 1px solid rgba(0, 245, 196, 0.15);
+box-shadow: 0 20px 60px rgba(0, 245, 196, 0.08);
   display: flex;
   flex-direction: column;
   gap: 22px;
@@ -67,14 +69,14 @@ button {
   border: none;
   font-weight: 600;
   cursor: pointer;
-  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  background: linear-gradient(90deg, #00f5c4, #00a8ff);
   color: white;
   transition: 0.3s ease;
 }
 
 button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.35);
+   box-shadow: 0 0 20px rgba(0, 245, 196, 0.5);
 }
 
 /* Complaints Section */
@@ -84,7 +86,7 @@ h2 {
   font-weight: 700;
   text-align: center;
 
-  color: #dcd6ff;
+  color: #ffffff;
   letter-spacing: 1.5px;
 }
 h2::after {
@@ -92,7 +94,7 @@ h2::after {
   display: block;
   width: 80px;
   height: 4px;
-  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  background: linear-gradient(90deg, #00f5c4, #00a8ff);
   margin: 12px auto 0;
   border-radius: 10px;
 }
@@ -106,7 +108,8 @@ h2::after {
 
 #complaintList div {
   width: 100%;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.04);
+border: 1px solid rgba(0, 255, 200, 0.1);
   backdrop-filter: blur(15px);
   border: 1px solid rgba(255,255,255,0.3);
   padding: 30px;
@@ -225,10 +228,21 @@ h2::after {
   font-size: 24px;
 }
 
-.total { background: linear-gradient(135deg, #6a11cb, #2575fc); }
-.pending { background: linear-gradient(135deg, #f7971e, #ffd200); }
-.progress { background: linear-gradient(135deg, #00c6ff, #0072ff); }
-.resolved { background: linear-gradient(135deg, #11998e, #38ef7d); }
+.total {
+  background: linear-gradient(135deg, #00f5c4, #00a8ff);
+}
+
+.pending {
+  background: linear-gradient(135deg, #ff9f43, #ff6b6b);
+}
+
+.progress {
+  background: linear-gradient(135deg, #00f5c4, #00a8ff);
+}
+
+.resolved {
+  background: linear-gradient(135deg, #00c851, #00ff9d);
+}
 
 h1, h2 {
   animation: fadeIn 1s ease forwards;
@@ -364,4 +378,13 @@ h1, h2 {
     flex-direction: column;
   }
 
+}
+/* Premium Glow Effect */
+
+form, .complaint-card {
+  transition: all 0.3s ease;
+}
+
+form:hover, .complaint-card:hover {
+  box-shadow: 0 0 40px rgba(0, 245, 196, 0.15);
 }
