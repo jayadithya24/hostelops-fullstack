@@ -10,10 +10,7 @@ body {
   background: radial-gradient(circle at 30% 20%, #0f2027, #0a0f14 60%);
   background-color: #0a0f14;
   color: #e6f1ff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 /* Title */
@@ -111,7 +108,6 @@ h2::after {
   background: rgba(255, 255, 255, 0.04);
 border: 1px solid rgba(0, 255, 200, 0.1);
   backdrop-filter: blur(15px);
-  border: 1px solid rgba(255,255,255,0.3);
   padding: 30px;
   border-radius: 20px;
   margin-bottom: 30px;
@@ -387,4 +383,12 @@ form, .complaint-card {
 
 form:hover, .complaint-card:hover {
   box-shadow: 0 0 40px rgba(0, 245, 196, 0.15);
+}
+/* Auth Pages Only */
+.auth-page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
