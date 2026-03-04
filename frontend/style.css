@@ -25,32 +25,20 @@ h1 {
 /* Card Container */
 form {
   width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 50px 40px;
-  border-radius: 30px;          /* optional: remove rounded card look */
-  background: rgba(255, 255, 255, 0.05);
-backdrop-filter: blur(12px);
-border: 1px solid rgba(0, 245, 196, 0.15);
-box-shadow: 0 20px 60px rgba(0, 245, 196, 0.08);
   display: flex;
   flex-direction: column;
-  gap: 22px;
-  transition: 0.3s ease;
+  gap: 18px;
 }
 
-form:hover {
-  transform: translateY(-5px);
-}
+
 
 /* Inputs */
 input, select, textarea {
-  padding: 16px 18px;
-  font-size: 16px;
-  border-radius: 10px;
-  border: none;
-  font-size: 14px;
-  outline: none;
+  padding:16px 18px;
+  font-size:16px;
+  border-radius:12px;
+  border:none;
+  outline:none;
 }
 
 textarea {
@@ -77,24 +65,6 @@ button:hover {
 }
 
 /* Complaints Section */
-h2 {
-  margin-top: 90px;
-  font-size: 36px;
-  font-weight: 700;
-  text-align: center;
-
-  color: #ffffff;
-  letter-spacing: 1.5px;
-}
-h2::after {
-  content: "";
-  display: block;
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(90deg, #00f5c4, #00a8ff);
-  margin: 12px auto 0;
-  border-radius: 10px;
-}
 
 #complaintList {
   width: 100%;
@@ -277,19 +247,10 @@ h1, h2 {
 }
 
 .auth-form {
-  width: 94%;
-  max-width: 440px;
-  padding: 35px 25px;
-  border-radius: 20px;
-
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(0, 245, 196, 0.15);
-  box-shadow: 0 20px 60px rgba(0, 245, 196, 0.08);
-
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
 }
 .auth-link {
   margin-top: 20px;
@@ -374,11 +335,11 @@ h1, h2 {
 }
 /* Premium Glow Effect */
 
-form, .complaint-card {
+.complaint-card {
   transition: all 0.3s ease;
 }
 
-form:hover, .complaint-card:hover {
+.complaint-card:hover {
   box-shadow: 0 0 40px rgba(0, 245, 196, 0.15);
 }
 /* Auth Pages Only */
@@ -401,8 +362,148 @@ form:hover, .complaint-card:hover {
     font-size: 16px;
   }
 
-  button {
-    font-size: 16px;
-  }
+  button{
+  padding:16px;
+  font-size:16px;
+  border-radius:12px;
+  border:none;
+  font-weight:600;
 
+  background:linear-gradient(90deg,#19e3c8,#1fa2ff);
+  color:white;
+
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 30px rgba(0,245,196,0.35);
+}
+}
+/* ---------- AUTH PAGE HEADER ---------- */
+
+.auth-container{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+}
+
+.auth-header{
+  text-align:center;
+  margin-bottom:30px;
+}
+
+.logo-icon{
+  font-size:32px;
+  margin-bottom:8px;
+}
+
+.brand-title{
+  font-size:42px;
+  font-weight:800;
+  letter-spacing:1px;
+  text-shadow:0 0 15px rgba(0,255,200,0.25);
+}
+
+/* glowing underline */
+
+.title-line{
+  width:90px;
+  height:4px;
+  margin:10px auto 40px;
+  border-radius:10px;
+  background:linear-gradient(90deg,#19e3c8,#1fa2ff);
+}
+
+
+/* ---------- AUTH CARD ---------- */
+.auth-card{
+  width:92%;
+  max-width:480px;   /* perfect SaaS login width */
+
+  padding:40px 35px;
+
+  border-radius:20px;
+
+  background:rgba(255,255,255,0.04);
+  backdrop-filter:blur(14px);
+
+  border:1px solid rgba(0,245,196,0.15);
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.5),
+    0 0 30px rgba(0,245,196,0.06);
+
+  text-align:center;
+}
+.auth-card h3{
+  font-size:26px;
+  font-weight:700;
+  margin-bottom:6px;
+  letter-spacing:0.5px;
+}
+
+.auth-subtitle{
+  font-size:14px;
+  color:#9fb3c8;
+  margin-bottom:28px;
+  max-width:320px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+
+/* ---------- INPUT GROUP ---------- */
+
+.input-group input{
+  width:100%;
+  padding:16px;
+  border-radius:12px;
+  border:none;
+
+  background:rgba(255,255,255,0.9);
+
+  font-size:15px;
+}
+.auth-card::before{
+  content:"";
+  position:absolute;
+  width:250px;
+  height:250px;
+  background:radial-gradient(circle,#19e3c8,transparent 70%);
+  filter:blur(120px);
+  z-index:-1;
+}
+/* Brand header */
+
+.brand{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+}
+.brand-icon{
+  width: 40px;
+  height: 40px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:rgba(0,255,200,0.08);
+  border-radius:10px;
+
+  font-size:20px;
+
+  box-shadow:0 0 20px rgba(0,255,200,0.25);
+}
+
+.brand-title{
+  font-size:48px;
+  font-weight:800;
+  letter-spacing:1px;
+  margin-bottom:8px;
 }

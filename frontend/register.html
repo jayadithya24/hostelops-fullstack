@@ -2,34 +2,82 @@
 <html>
 <head>
   <title>Register - HostelOps</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="auth-page">
 
   <div class="auth-container">
-    <h2>📝 HostelOps Register</h2>
 
-    <form id="registerForm" class="auth-form">
+    <!-- Header -->
+    <div class="auth-header">
+      <div class="brand">
+  <h1 class="brand-title">HostelOps</h1>
+</div>
+      <div class="title-line"></div>
+    </div>
 
-  <input type="text" id="name" placeholder="Full Name" required>
-  <input type="email" id="email" placeholder="Email" required>
-  <input type="password" id="password" placeholder="Password" required>
+    <!-- Card -->
+    <div class="auth-card">
 
-  <button type="submit" class="auth-btn">
-  <span class="btn-text">Register</span>
-  <span class="spinner"></span>
-</button>
+      <h3>Create your account</h3>
+      <p class="auth-subtitle">Register to submit and manage complaints</p>
 
-  <!-- Move message INSIDE form -->
-  <p class="auth-link">
-    Already have an account?
-    <a href="login.html">Login here</a>
-  </p>
+      <form id="registerForm" class="auth-form">
 
-</form>
+        <!-- Full Name -->
+        <div class="input-group">
+          <input
+            type="text"
+            id="name"
+            placeholder="Full Name"
+            required
+          >
+        </div>
+
+        <!-- Email -->
+        <div class="input-group">
+          <input
+            type="email"
+            id="email"
+            placeholder="Email address"
+            required
+          >
+        </div>
+
+        <!-- Password -->
+        <div class="input-group">
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            required
+          >
+        </div>
+
+        <!-- Register Button -->
+        <button type="submit" class="auth-btn">
+          <span class="btn-text">Register</span>
+          <span class="spinner"></span>
+        </button>
+
+        <!-- Login Link -->
+        <p class="auth-link">
+          Already have an account?
+          <a href="login.html">Login here</a>
+        </p>
+
+      </form>
+
+    </div>
+
   </div>
 
   <script src="auth.js"></script>
+
 </body>
 </html>
