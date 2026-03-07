@@ -23,19 +23,16 @@
     return;
   }
 
-  // Student should not access admin page
   if (window.location.pathname.includes("admin") && role !== "admin") {
     window.location.href = "index.html";
     return;
   }
 
-  // Admin should not access student dashboard
   if (window.location.pathname.includes("index") && role === "admin") {
     window.location.href = "admin.html";
     return;
   }
 
-  // Show page only after auth validation
   document.body.style.display = "block";
 
 
@@ -49,12 +46,39 @@
 
 
   /* =========================
-     SUBMIT COMPLAINT (Student)
+     ICON HELPER
+  ========================= */
+
+  function getIcon(category) {
+    if (category === "Electrical") return "⚡";
+    if (category === "Cleanliness") return "✨";
+    if (category === "Furniture") return "🪑";
+    if (category === "Plumbing") return "🚿";
+    return "📋";
+  }
+
+  function timeAgo(date) {
+
+    const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+
+    const hours = Math.floor(seconds / 3600);
+
+    if (hours < 1) return "just now";
+
+    if (hours === 1) return "about 1 hour ago";
+
+    return `about ${hours} hours ago`;
+  }
+
+
+  /* =========================
+     SUBMIT COMPLAINT
   ========================= */
 
   if (form && role === "student") {
 
     form.addEventListener("submit", async (e) => {
+
       e.preventDefault();
 
       const complaint = {
@@ -86,6 +110,7 @@
         alert(data.message);
 
         form.reset();
+
         loadComplaints();
 
       } catch (error) {
@@ -94,6 +119,7 @@
         alert("Failed to submit complaint");
 
       }
+
     });
 
   }
@@ -118,6 +144,7 @@
         if (selectedStatus && selectedStatus !== "All") {
           url += `?status=${selectedStatus}`;
         }
+
       }
 
       const res = await fetch(url, {
@@ -168,24 +195,58 @@
 
         const statusSection = role === "admin"
           ? `
-            <select onchange="updateStatus('${c._id}', this.value)">
-              <option ${c.status === "Pending" ? "selected" : ""}>Pending</option>
-              <option ${c.status === "In Progress" ? "selected" : ""}>In Progress</option>
-              <option ${c.status === "Resolved" ? "selected" : ""}>Resolved</option>
-            </select>
+          <select onchange="updateStatus('${c._id}', this.value)">
+            <option ${c.status === "Pending" ? "selected" : ""}>Pending</option>
+            <option ${c.status === "In Progress" ? "selected" : ""}>In Progress</option>
+            <option ${c.status === "Resolved" ? "selected" : ""}>Resolved</option>
+          </select>
           `
           : `<span class="status-badge">${c.status}</span>`;
 
         return `
-          <div class="complaint-card">
-            <h4>${c.category}</h4>
-            <p>${c.description}</p>
-            <div class="badge-row">
-              <span class="priority">${c.priority}</span>
-              ${statusSection}
+
+        <div class="complaint-card-modern">
+
+          <div class="complaint-header">
+
+            <div class="icon-box">
+              ${getIcon(c.category)}
             </div>
+
+            <div class="complaint-info">
+
+              <h3 class="complaint-category">
+                ${c.category}
+              </h3>
+
+              <p class="complaint-desc">
+                ${c.description}
+              </p>
+
+              <div class="complaint-meta">
+
+                <span class="priority-badge ${c.priority.toLowerCase()}">
+                  ${c.priority} Priority
+                </span>
+
+                <span class="time">
+                  ⏱ ${timeAgo(c.createdAt)}
+                </span>
+
+              </div>
+
+            </div>
+
           </div>
+
+          <div class="status-row">
+            ${statusSection}
+          </div>
+
+        </div>
+
         `;
+
       }).join("");
 
     } catch (error) {

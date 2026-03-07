@@ -211,7 +211,29 @@ app.put("/api/complaints/:id", authMiddleware, async (req, res) => {
     res.status(500).json({ message: "Failed to update status" });
   }
 });
+/* ===============================
+   DELETE COMPLAINT (Admin)
+================================= */
 
+app.delete("/api/complaints/:id", authMiddleware, async (req, res) => {
+
+  try {
+
+    if (req.user.role !== "admin")
+      return res.status(403).json({ message: "Access denied" });
+
+    await Complaint.findByIdAndDelete(req.params.id);
+
+    res.json({ message: "Complaint deleted" });
+
+  } catch (err) {
+
+    console.error(err);
+    res.status(500).json({ message: "Delete failed" });
+
+  }
+
+});
 /* ===============================
    SERVER
 ================================= */

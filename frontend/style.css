@@ -507,3 +507,11 @@ button:hover{
   letter-spacing:1px;
   margin-bottom:8px;
 }
+.row-fields{
+display:flex;
+gap:15px;
+}
+
+.row-fields select{
+flex:1;
+}
