@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { getComplaints, updateComplaintStatus, deleteComplaint } from "../api/api";
+
 import {
   PieChart,
   Pie,
@@ -25,8 +26,6 @@ export default function Admin() {
   const [statusFilter, setStatusFilter] = useState("All");
   const [search, setSearch] = useState("");
 
-
-
   async function loadComplaints() {
 
     const data = await getComplaints(token);
@@ -45,7 +44,6 @@ export default function Admin() {
     }
 
     setComplaints(filtered);
-
   }
 
   useEffect(() => {
@@ -55,44 +53,34 @@ export default function Admin() {
 
 
   async function changeStatus(id, status) {
-
     await updateComplaintStatus(id, status, token);
-
     loadComplaints();
-
   }
-  function handleView(c) {
 
-  alert(
+
+
+  function handleView(c) {
+    alert(
 `Category: ${c.category}
 Description: ${c.description}
 Priority: ${c.priority}
 Status: ${c.status}`
-  );
+    );
+  }
 
-}
 
 
-async function handleDelete(id) {
+  async function handleDelete(id) {
 
-  const confirmDelete = window.confirm("Delete this complaint?");
+    const confirmDelete = window.confirm("Delete this complaint?");
 
-  if (!confirmDelete) return;
+    if (!confirmDelete) return;
 
-  alert("Complaint deleted (example)");
+    await deleteComplaint(id, token);
 
-}
-async function handleDelete(id) {
+    loadComplaints();
+  }
 
-  const confirmDelete = window.confirm("Delete this complaint?");
-
-  if (!confirmDelete) return;
-
-  await deleteComplaint(id, token);
-
-  loadComplaints();
-
-}
 
 
   /* ======================
@@ -107,7 +95,7 @@ async function handleDelete(id) {
 
 
   /* ======================
-     CATEGORY CHART DATA
+     CATEGORY CHART
   ====================== */
 
   const categoryMap = {};
@@ -124,7 +112,7 @@ async function handleDelete(id) {
 
 
   /* ======================
-     PRIORITY CHART DATA
+     PRIORITY CHART
   ====================== */
 
   const priorityMap = { Low: 0, Medium: 0, High: 0 };
@@ -146,7 +134,7 @@ async function handleDelete(id) {
 
 
   /* ======================
-     CATEGORY ICON MAP
+     ICON MAP
   ====================== */
 
   const iconMap = {
@@ -164,15 +152,12 @@ async function handleDelete(id) {
 
       <Navbar />
 
-      <div className="max-w-7xl mx-auto p-8">
-
-        
-
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
 
 
         {/* STATS */}
 
-        <div className="grid grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
 
           <div className="bg-gradient-to-r from-cyan-500 to-blue-500 p-6 rounded-2xl shadow-lg">
             <p className="text-sm opacity-80">Total</p>
@@ -204,9 +189,9 @@ async function handleDelete(id) {
 
         {/* CHARTS */}
 
-        <div className="grid grid-cols-2 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
 
-          {/* CATEGORY PIE */}
+          {/* CATEGORY */}
 
           <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700">
 
@@ -215,6 +200,7 @@ async function handleDelete(id) {
             </h3>
 
             <ResponsiveContainer width="100%" height={300}>
+
               <PieChart>
 
                 <Pie
@@ -234,13 +220,14 @@ async function handleDelete(id) {
                 <Tooltip />
 
               </PieChart>
+
             </ResponsiveContainer>
 
           </div>
 
 
 
-          {/* PRIORITY BAR */}
+          {/* PRIORITY */}
 
           <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700">
 
@@ -270,9 +257,11 @@ async function handleDelete(id) {
 
         </div>
 
- {/* SEARCH + FILTER */}
 
-        <div className="flex gap-4 mb-10">
+
+        {/* SEARCH + FILTER */}
+
+        <div className="flex flex-col md:flex-row gap-4 mb-10">
 
           <input
             type="text"
@@ -285,7 +274,7 @@ async function handleDelete(id) {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="bg-slate-800 p-3 rounded-xl border border-slate-700"
+            className="bg-slate-800 p-3 rounded-xl border border-slate-700 md:w-48"
           >
             <option>All</option>
             <option>Pending</option>
@@ -295,12 +284,15 @@ async function handleDelete(id) {
 
         </div>
 
+
+
         {/* COMPLAINT LIST */}
 
         <h2 className="text-2xl font-bold mb-6">
           All Complaints
         </h2>
-       
+
+
 
         <div className="space-y-6">
 
@@ -311,13 +303,11 @@ async function handleDelete(id) {
               className="bg-slate-800 p-6 rounded-2xl border border-slate-700 hover:border-cyan-500 transition"
             >
 
-              <div className="flex justify-between">
+              <div className="flex flex-col md:flex-row justify-between gap-6">
 
-                {/* LEFT SIDE */}
+                {/* LEFT */}
 
                 <div className="flex gap-4">
-
-                  {/* ICON */}
 
                   <div className="w-12 h-12 flex items-center justify-center rounded-xl bg-slate-700 text-cyan-400 text-xl">
                     {iconMap[c.category] || <FaWrench />}
@@ -333,15 +323,11 @@ async function handleDelete(id) {
                       {c.description}
                     </p>
 
-                    <div className="flex items-center gap-3 mt-2">
-
-                      {/* PRIORITY */}
+                    <div className="flex flex-wrap items-center gap-3 mt-2">
 
                       <span className="px-3 py-1 rounded-full bg-orange-200 text-orange-700 text-sm">
                         {c.priority} Priority
                       </span>
-
-                      {/* TIME */}
 
                       <span className="flex items-center gap-1 text-gray-400 text-sm">
                         <FiClock />
@@ -349,8 +335,6 @@ async function handleDelete(id) {
                           ? new Date(c.createdAt).toLocaleDateString()
                           : "Just now"}
                       </span>
-
-                      {/* USER */}
 
                       <span className="text-gray-400 text-sm">
                         By: {c.name || "Student"}
@@ -364,14 +348,14 @@ async function handleDelete(id) {
 
 
 
-                {/* RIGHT SIDE */}
+                {/* RIGHT */}
 
-                <div className="flex flex-col gap-3 items-end">
+                <div className="flex flex-col gap-3 md:items-end">
 
                   <select
                     value={c.status}
                     onChange={(e)=>changeStatus(c._id,e.target.value)}
-                    className="bg-slate-700 p-3 rounded-lg w-40"
+                    className="bg-slate-700 p-3 rounded-lg w-full md:w-40"
                   >
                     <option>Pending</option>
                     <option>In Progress</option>
@@ -380,23 +364,24 @@ async function handleDelete(id) {
 
                   <div className="flex gap-3">
 
-  <button
-    onClick={() => handleView(c)}
-    className="flex items-center gap-2 bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700"
-  >
-    <FaEye />
-    View
-  </button>
+                    <button
+                      onClick={() => handleView(c)}
+                      className="flex items-center gap-2 bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700"
+                    >
+                      <FaEye />
+                      View
+                    </button>
 
-  <button
-    onClick={() => handleDelete(c._id)}
-    className="flex items-center gap-2 bg-red-600 px-4 py-2 rounded-lg hover:bg-red-700"
-  >
-    <FaTrash />
-    Delete
-  </button>
+                    <button
+                      onClick={() => handleDelete(c._id)}
+                      className="flex items-center gap-2 bg-red-600 px-4 py-2 rounded-lg hover:bg-red-700"
+                    >
+                      <FaTrash />
+                      Delete
+                    </button>
 
-</div>
+                  </div>
+
                 </div>
 
               </div>
@@ -410,7 +395,5 @@ async function handleDelete(id) {
       </div>
 
     </div>
-
   );
-
 }
