@@ -73,24 +73,37 @@ export default function ComplaintForm({refresh}){
 
           <select name="course" onChange={handleChange} className="bg-slate-800 p-3 rounded-lg">
             <option>Course</option>
-            <option>BCA</option>
-            <option>BTech</option>
-            <option>MCA</option>
+  <option>BCA</option>
+  <option>BTech</option>
+  <option>MCA</option>
+  <option>MBA</option>
+  <option>BSc</option>
+  <option>MSc</option>
+  <option>BBA</option>
           </select>
 
           <select name="branch" onChange={handleChange} className="bg-slate-800 p-3 rounded-lg">
-            <option>Branch</option>
-            <option>Computer Science</option>
-            <option>Information Science</option>
-            <option>AIML</option>
-            <option>Mechanical</option>
+             <option>Branch</option>
+  <option>Computer Science</option>
+  <option>Information Science</option>
+  <option>AIML</option>
+  <option>Mechanical</option>
+  <option>Civil</option>
+  <option>Electronics</option>
+  <option>Electrical</option>
+  <option>Data Science</option>
           </select>
 
           <select name="semester" onChange={handleChange} className="bg-slate-800 p-3 rounded-lg">
             <option>Semester</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
+           <option>1</option>
+  <option>2</option>
+  <option>3</option>
+  <option>4</option>
+  <option>5</option>
+  <option>6</option>
+  <option>7</option>
+  <option>8</option>
           </select>
 
         </div>
