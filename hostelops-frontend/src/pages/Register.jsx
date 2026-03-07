@@ -10,10 +10,13 @@ export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e) {
 
     e.preventDefault();
+
+    setLoading(true);
 
     try {
 
@@ -33,12 +36,13 @@ export default function Register() {
 
       if (!res.ok) {
         alert(data.message || "Registration failed");
+        setLoading(false);
         return;
       }
 
       alert("Registration successful! Please login.");
 
-      navigate("/");
+      navigate("/login");
 
     } catch (error) {
 
@@ -46,6 +50,8 @@ export default function Register() {
       alert("Server error. Please try again.");
 
     }
+
+    setLoading(false);
 
   }
 
@@ -115,11 +121,23 @@ export default function Register() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
+          {/* Register Button */}
+
           <button
             type="submit"
-            className="w-full bg-teal-500 hover:bg-teal-600 py-3 rounded-lg font-semibold transition"
+            disabled={loading}
+            className="w-full bg-teal-500 hover:bg-teal-600 py-3 rounded-lg font-semibold transition flex items-center justify-center gap-2"
           >
-            Register
+
+            {loading ? (
+              <>
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                Registering...
+              </>
+            ) : (
+              "Register"
+            )}
+
           </button>
 
         </form>

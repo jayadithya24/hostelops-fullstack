@@ -13,6 +13,8 @@ export default function Login() {
     password: ""
   });
 
+  const [loading, setLoading] = useState(false);
+
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
@@ -21,23 +23,33 @@ export default function Login() {
 
     e.preventDefault();
 
-    const res = await loginUser(form.email, form.password, role);
+    setLoading(true);
 
-    if (res.token) {
+    try {
 
-      localStorage.setItem("token", res.token);
-      localStorage.setItem("role", res.role);
+      const res = await loginUser(form.email, form.password, role);
 
-      if (res.role === "admin") {
-        navigate("/admin");
+      if (res.token) {
+
+        localStorage.setItem("token", res.token);
+        localStorage.setItem("role", res.role);
+
+        if (res.role === "admin") {
+          navigate("/admin");
+        } else {
+          navigate("/dashboard");
+        }
+
       } else {
-        navigate("/dashboard");
+        alert(res.message);
       }
 
-    } else {
-      alert(res.message);
+    } catch (err) {
+      console.log(err);
+      alert("Login failed");
     }
 
+    setLoading(false);
   }
 
   return (
@@ -45,10 +57,6 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center bg-slate-950 text-white px-4">
 
       <div className="w-full max-w-md">
-
-        {/* Back to Home */}
-
-        
 
         {/* Logo */}
 
@@ -60,19 +68,21 @@ export default function Login() {
         {/* Card */}
 
         <div className="bg-slate-900 p-8 rounded-2xl border border-slate-800 shadow-xl">
-<Link
-          to="/"
-          className="text-teal-400 hover:text-teal-300 text-sm mb-4 inline-block"
-        >
-          ← Back to Home
-        </Link>
-         <h2 className="text-2xl font-semibold mb-2 text-center">
-  Welcome back
-</h2>
 
-<p className="text-gray-400 mb-6 text-center">
-  Sign in to continue to your dashboard
-</p>
+          <Link
+            to="/"
+            className="text-teal-400 hover:text-teal-300 text-sm mb-4 inline-block"
+          >
+            ← Back to Home
+          </Link>
+
+          <h2 className="text-2xl font-semibold mb-2 text-center">
+            Welcome back
+          </h2>
+
+          <p className="text-gray-400 mb-6 text-center">
+            Sign in to continue to your dashboard
+          </p>
 
           {/* ROLE TOGGLE */}
 
@@ -101,7 +111,6 @@ export default function Login() {
             </button>
 
           </div>
-
 
           {/* FORM */}
 
@@ -140,17 +149,25 @@ export default function Login() {
 
             </div>
 
-
             {/* LOGIN BUTTON */}
 
             <button
-              className="w-full bg-gradient-to-r from-teal-400 to-blue-500 py-3 rounded-lg font-semibold text-black hover:opacity-90 transition"
+              disabled={loading}
+              className="w-full bg-gradient-to-r from-teal-400 to-blue-500 py-3 rounded-lg font-semibold text-black hover:opacity-90 transition flex items-center justify-center gap-2"
             >
-              Sign in →
+
+              {loading ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
+                  Signing in...
+                </>
+              ) : (
+                "Sign in →"
+              )}
+
             </button>
 
           </form>
-
 
           {/* REGISTER LINK */}
 
@@ -174,5 +191,4 @@ export default function Login() {
     </div>
 
   );
-
 }
