@@ -51,16 +51,25 @@ export default function Register() {
 
   return (
 
-    <div className="min-h-screen flex items-center justify-center bg-slate-950 text-white">
+    <div className="min-h-screen flex items-center justify-center bg-slate-950 text-white px-4">
 
-      <div className="w-full max-w-md bg-slate-900 p-8 rounded-xl shadow-lg">
+      <div className="w-full max-w-md bg-slate-900 p-8 rounded-xl shadow-lg border border-slate-800">
+
+        {/* Back Button */}
+
+        <Link
+          to="/"
+          className="text-teal-400 hover:text-teal-300 text-sm mb-4 inline-block"
+        >
+          ← Back to Home
+        </Link>
 
         {/* Header */}
 
         <div className="text-center mb-6">
 
           <h1 className="text-3xl font-bold">
-            HostelOps
+            Hostel<span className="text-teal-400">Ops</span>
           </h1>
 
           <div className="w-16 h-1 bg-teal-400 mx-auto mt-2"></div>
@@ -75,13 +84,15 @@ export default function Register() {
           Register to submit and manage complaints
         </p>
 
+        {/* Form */}
+
         <form onSubmit={handleSubmit} className="space-y-4">
 
           <input
             type="text"
             placeholder="Full Name"
             required
-            className="w-full p-3 rounded-lg bg-slate-800 border border-slate-700"
+            className="w-full p-3 rounded-lg bg-slate-800 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-400"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -90,7 +101,7 @@ export default function Register() {
             type="email"
             placeholder="Email address"
             required
-            className="w-full p-3 rounded-lg bg-slate-800 border border-slate-700"
+            className="w-full p-3 rounded-lg bg-slate-800 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-400"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -99,26 +110,28 @@ export default function Register() {
             type="password"
             placeholder="Password"
             required
-            className="w-full p-3 rounded-lg bg-slate-800 border border-slate-700"
+            className="w-full p-3 rounded-lg bg-slate-800 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-400"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
 
           <button
             type="submit"
-            className="w-full bg-teal-500 hover:bg-teal-600 py-3 rounded-lg font-semibold"
+            className="w-full bg-teal-500 hover:bg-teal-600 py-3 rounded-lg font-semibold transition"
           >
             Register
           </button>
 
         </form>
 
+        {/* Login Link */}
+
         <p className="text-center text-gray-400 mt-6">
 
           Already have an account?{" "}
 
           <Link
-            to="/"
+            to="/login"
             className="text-teal-400 hover:underline"
           >
             Login here

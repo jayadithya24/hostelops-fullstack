@@ -166,30 +166,7 @@ async function handleDelete(id) {
 
       <div className="max-w-7xl mx-auto p-8">
 
-        {/* SEARCH + FILTER */}
-
-        <div className="flex gap-4 mb-10">
-
-          <input
-            type="text"
-            placeholder="Search complaints..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="flex-1 bg-slate-800 p-3 rounded-xl border border-slate-700"
-          />
-
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="bg-slate-800 p-3 rounded-xl border border-slate-700"
-          >
-            <option>All</option>
-            <option>Pending</option>
-            <option>In Progress</option>
-            <option>Resolved</option>
-          </select>
-
-        </div>
+        
 
 
 
@@ -293,13 +270,37 @@ async function handleDelete(id) {
 
         </div>
 
+ {/* SEARCH + FILTER */}
 
+        <div className="flex gap-4 mb-10">
+
+          <input
+            type="text"
+            placeholder="Search complaints..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="flex-1 bg-slate-800 p-3 rounded-xl border border-slate-700"
+          />
+
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="bg-slate-800 p-3 rounded-xl border border-slate-700"
+          >
+            <option>All</option>
+            <option>Pending</option>
+            <option>In Progress</option>
+            <option>Resolved</option>
+          </select>
+
+        </div>
 
         {/* COMPLAINT LIST */}
 
         <h2 className="text-2xl font-bold mb-6">
           All Complaints
         </h2>
+       
 
         <div className="space-y-6">
 

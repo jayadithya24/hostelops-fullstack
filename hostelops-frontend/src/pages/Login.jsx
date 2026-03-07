@@ -1,92 +1,100 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { loginUser } from "../api/api";
 
 export default function Login() {
 
   const navigate = useNavigate();
 
-  const [role,setRole] = useState("student");
+  const [role, setRole] = useState("student");
 
-  const [form,setForm] = useState({
-    email:"",
-    password:""
+  const [form, setForm] = useState({
+    email: "",
+    password: ""
   });
 
-  function handleChange(e){
-    setForm({...form,[e.target.name]:e.target.value});
+  function handleChange(e) {
+    setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  async function handleSubmit(e){
+  async function handleSubmit(e) {
 
     e.preventDefault();
 
-    const res = await loginUser(form.email,form.password,role);
+    const res = await loginUser(form.email, form.password, role);
 
-    if(res.token){
+    if (res.token) {
 
-      localStorage.setItem("token",res.token);
-      localStorage.setItem("role",res.role);
+      localStorage.setItem("token", res.token);
+      localStorage.setItem("role", res.role);
 
-      if(res.role === "admin"){
+      if (res.role === "admin") {
         navigate("/admin");
-      }else{
+      } else {
         navigate("/dashboard");
       }
 
-    }else{
+    } else {
       alert(res.message);
     }
 
   }
 
-  return(
+  return (
 
-    <div className="min-h-screen flex items-center justify-center bg-slate-950 text-white">
+    <div className="min-h-screen flex items-center justify-center bg-slate-950 text-white px-4">
 
       <div className="w-full max-w-md">
+
+        {/* Back to Home */}
+
+        
 
         {/* Logo */}
 
         <h1 className="text-4xl font-bold text-center mb-8">
-          HostelOps
+          Hostel<span className="text-teal-400">Ops</span>
           <div className="w-16 h-1 bg-teal-400 mx-auto mt-2 rounded"></div>
         </h1>
 
         {/* Card */}
 
         <div className="bg-slate-900 p-8 rounded-2xl border border-slate-800 shadow-xl">
+<Link
+          to="/"
+          className="text-teal-400 hover:text-teal-300 text-sm mb-4 inline-block"
+        >
+          ← Back to Home
+        </Link>
+         <h2 className="text-2xl font-semibold mb-2 text-center">
+  Welcome back
+</h2>
 
-          <h2 className="text-2xl font-semibold mb-2">
-            Welcome back
-          </h2>
-
-          <p className="text-gray-400 mb-6">
-            Sign in to continue to your dashboard
-          </p>
-
+<p className="text-gray-400 mb-6 text-center">
+  Sign in to continue to your dashboard
+</p>
 
           {/* ROLE TOGGLE */}
 
           <div className="flex bg-slate-800 rounded-xl p-1 mb-6">
 
             <button
-              onClick={()=>setRole("student")}
+              onClick={() => setRole("student")}
               className={`flex-1 py-2 rounded-lg ${
-                role==="student"
-                ? "bg-gradient-to-r from-teal-400 to-blue-500 text-black"
-                : "text-gray-400"
+                role === "student"
+                  ? "bg-gradient-to-r from-teal-400 to-blue-500 text-black"
+                  : "text-gray-400"
               }`}
             >
               🎓 Student
             </button>
 
             <button
-              onClick={()=>setRole("admin")}
+              onClick={() => setRole("admin")}
               className={`flex-1 py-2 rounded-lg ${
-                role==="admin"
-                ? "bg-gradient-to-r from-teal-400 to-blue-500 text-black"
-                : "text-gray-400"
+                role === "admin"
+                  ? "bg-gradient-to-r from-teal-400 to-blue-500 text-black"
+                  : "text-gray-400"
               }`}
             >
               🛡 Admin
@@ -110,7 +118,7 @@ export default function Login() {
                 value={form.email}
                 onChange={handleChange}
                 placeholder="you@example.com"
-                className="w-full mt-1 bg-slate-800 p-3 rounded-lg"
+                className="w-full mt-1 bg-slate-800 p-3 rounded-lg border border-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-400"
               />
 
             </div>
@@ -127,7 +135,7 @@ export default function Login() {
                 value={form.password}
                 onChange={handleChange}
                 placeholder="••••••••"
-                className="w-full mt-1 bg-slate-800 p-3 rounded-lg"
+                className="w-full mt-1 bg-slate-800 p-3 rounded-lg border border-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-400"
               />
 
             </div>
@@ -136,7 +144,7 @@ export default function Login() {
             {/* LOGIN BUTTON */}
 
             <button
-              className="w-full bg-gradient-to-r from-teal-400 to-blue-500 py-3 rounded-lg font-semibold text-black"
+              className="w-full bg-gradient-to-r from-teal-400 to-blue-500 py-3 rounded-lg font-semibold text-black hover:opacity-90 transition"
             >
               Sign in →
             </button>
@@ -148,14 +156,14 @@ export default function Login() {
 
           <p className="text-center text-gray-400 mt-6">
 
-            Don't have an account?
+            Don't have an account?{" "}
 
-            <span
-              onClick={()=>navigate("/register")}
-              className="text-teal-400 ml-2 cursor-pointer"
+            <Link
+              to="/register"
+              className="text-teal-400 hover:underline"
             >
               Register here
-            </span>
+            </Link>
 
           </p>
 
