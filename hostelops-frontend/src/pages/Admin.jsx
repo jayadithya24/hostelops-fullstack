@@ -60,14 +60,30 @@ export default function Admin() {
 
 
   function handleView(c) {
-    alert(
-`Category: ${c.category}
+
+  alert(
+`Student Details
+
+Name: ${c.name}
+Enrollment: ${c.enrollment}
+
+Course: ${c.course}
+Branch: ${c.branch}
+Semester: ${c.semester}
+
+Hostel: ${c.hostelType}
+Room No: ${c.roomNumber}
+
+Complaint Details
+
+Category: ${c.category}
 Description: ${c.description}
+
 Priority: ${c.priority}
 Status: ${c.status}`
-    );
-  }
+  );
 
+}
 
 
   async function handleDelete(id) {

@@ -68,7 +68,21 @@ export default function ComplaintForm({refresh}){
           placeholder="Enrollment Number"
           className="w-full bg-slate-800 p-3 rounded-lg"
         />
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
+  <select className="bg-slate-800 p-3 rounded-xl">
+    <option>Hostel Type</option>
+    <option>Boys Hostel</option>
+    <option>Girls Hostel</option>
+  </select>
+
+  <input
+    type="text"
+    placeholder="Room Number"
+    className="bg-slate-800 p-3 rounded-xl"
+  />
+
+</div>
         <div className="grid grid-cols-3 gap-3">
 
           <select name="course" onChange={handleChange} className="bg-slate-800 p-3 rounded-lg">

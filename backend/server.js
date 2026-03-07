@@ -14,11 +14,13 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
 app.use(express.json());
 
 /* ===============================
    DATABASE CONNECTION
 ================================= */
+
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.error("MongoDB Error:", err));
@@ -26,16 +28,29 @@ mongoose.connect(process.env.MONGO_URI)
 /* ===============================
    COMPLAINT MODEL
 ================================= */
+
 const ComplaintSchema = new mongoose.Schema(
-  {
-    name: { type: String, required: true },
-    category: { type: String, required: true },
-    description: { type: String, required: true },
-    priority: { type: String, required: true },
-    status: { type: String, default: "Pending" },
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
-  },
-  { timestamps: true }
+{
+  name: { type: String, required: true },
+
+  enrollment: { type: String },
+  course: { type: String },
+  branch: { type: String },
+  semester: { type: String },
+
+  hostelType: { type: String },
+  roomNumber: { type: String },
+
+  category: { type: String, required: true },
+  description: { type: String, required: true },
+  priority: { type: String, required: true },
+
+  status: { type: String, default: "Pending" },
+
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
+
+},
+{ timestamps: true }
 );
 
 const Complaint = mongoose.model("Complaint", ComplaintSchema);
@@ -43,7 +58,9 @@ const Complaint = mongoose.model("Complaint", ComplaintSchema);
 /* ===============================
    AUTH MIDDLEWARE
 ================================= */
+
 const authMiddleware = (req, res, next) => {
+
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -53,42 +70,50 @@ const authMiddleware = (req, res, next) => {
   const token = authHeader.split(" ")[1];
 
   try {
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
     req.user = decoded;
+
     next();
+
   } catch (err) {
+
     return res.status(401).json({ message: "Invalid token" });
+
   }
+
 };
 
 /* ===============================
    REGISTER ROUTE
 ================================= */
+
 app.post("/api/register", async (req, res) => {
+
   try {
+
     let { name, email, password } = req.body;
 
     name = name?.trim();
     email = email?.trim().toLowerCase();
     password = password?.trim();
 
-    if (!name || !email || !password) {
-      return res.status(400).json({ message: "All fields are required" });
-    }
+    if (!name || !email || !password)
+      return res.status(400).json({ message: "All fields required" });
 
-    // Email format validation
     const emailRegex = /^\S+@\S+\.\S+$/;
-    if (!emailRegex.test(email)) {
+
+    if (!emailRegex.test(email))
       return res.status(400).json({ message: "Invalid email format" });
-    }
 
     const existingUser = await User.findOne({ email });
+
     if (existingUser)
       return res.status(400).json({ message: "User already exists" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // 🔒 Force role to student (secure)
     const user = new User({
       name,
       email,
@@ -101,15 +126,21 @@ app.post("/api/register", async (req, res) => {
     res.json({ message: "User Registered Successfully" });
 
   } catch (err) {
+
     console.error(err);
+
     res.status(500).json({ message: "Registration failed" });
+
   }
+
 });
 
 /* ===============================
    LOGIN ROUTE
 ================================= */
+
 app.post("/api/login", async (req, res) => {
+
   try {
 
     let { email, password, role } = req.body;
@@ -127,13 +158,10 @@ app.post("/api/login", async (req, res) => {
     if (!isMatch)
       return res.status(400).json({ message: "Invalid password" });
 
-    /* 🚨 ROLE VALIDATION */
-
-    if (user.role !== role) {
+    if (user.role !== role)
       return res.status(403).json({
         message: `This account must login through ${user.role} panel`
       });
-    }
 
     const token = jwt.sign(
       { id: user._id, role: user.role },
@@ -144,66 +172,95 @@ app.post("/api/login", async (req, res) => {
     res.json({ token, role: user.role });
 
   } catch (err) {
+
     console.error(err);
+
     res.status(500).json({ message: "Login failed" });
+
   }
+
 });
 
 /* ===============================
-   SUBMIT COMPLAINT (Protected)
+   SUBMIT COMPLAINT
 ================================= */
+
 app.post("/api/complaints", authMiddleware, async (req, res) => {
+
   try {
+
     const complaint = new Complaint({
       ...req.body,
       userId: req.user.id
     });
 
     await complaint.save();
+
     res.json({ message: "Complaint Submitted" });
 
   } catch (err) {
+
     console.error(err);
+
     res.status(500).json({ message: "Failed to submit complaint" });
+
   }
+
 });
 
 /* ===============================
    GET COMPLAINTS
 ================================= */
+
 app.get("/api/complaints", authMiddleware, async (req, res) => {
+
   try {
+
     const { status } = req.query;
+
     let filter = {};
 
     if (req.user.role === "admin") {
 
-      if (status && status !== "All") {
+      if (status && status !== "All")
         filter.status = status;
-      }
 
-      const complaints = await Complaint.find(filter).sort({ createdAt: -1 });
+      const complaints = await Complaint
+        .find(filter)
+        .sort({ createdAt: -1 });
+
       return res.json(complaints);
 
     } else {
 
       filter.userId = req.user.id;
 
-      const complaints = await Complaint.find(filter).sort({ createdAt: -1 });
+      const complaints = await Complaint
+        .find(filter)
+        .sort({ createdAt: -1 });
+
       return res.json(complaints);
+
     }
 
   } catch (err) {
+
     console.error(err);
+
     res.status(500).json({ message: "Failed to fetch complaints" });
+
   }
+
 });
 
 /* ===============================
-   UPDATE STATUS (Admin Only)
+   UPDATE STATUS (ADMIN)
 ================================= */
+
 app.put("/api/complaints/:id", authMiddleware, async (req, res) => {
+
   try {
+
     if (req.user.role !== "admin")
       return res.status(403).json({ message: "Access denied" });
 
@@ -214,12 +271,17 @@ app.put("/api/complaints/:id", authMiddleware, async (req, res) => {
     res.json({ message: "Status Updated" });
 
   } catch (err) {
+
     console.error(err);
+
     res.status(500).json({ message: "Failed to update status" });
+
   }
+
 });
+
 /* ===============================
-   DELETE COMPLAINT (Admin)
+   DELETE COMPLAINT (ADMIN)
 ================================= */
 
 app.delete("/api/complaints/:id", authMiddleware, async (req, res) => {
@@ -236,15 +298,19 @@ app.delete("/api/complaints/:id", authMiddleware, async (req, res) => {
   } catch (err) {
 
     console.error(err);
+
     res.status(500).json({ message: "Delete failed" });
 
   }
 
 });
+
 /* ===============================
    SERVER
 ================================= */
+
 const PORT = process.env.PORT || 5000;
 
-
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () =>
+  console.log(`Server running on port ${PORT}`)
+);
