@@ -2,12 +2,7 @@
    API BASE URL
 ========================= */
 
-// Automatically switch API depending on environment
-const API_BASE =
-  window.location.hostname === "localhost" ||
-  window.location.hostname === "127.0.0.1"
-    ? "http://localhost:5000"
-    : "https://hostelops-fullstack.onrender.com";
+const API_BASE = "https://hostelops-fullstack.onrender.com";
 
 
 /* =========================
@@ -31,9 +26,12 @@ if (registerForm) {
     };
 
     try {
+
       const res = await fetch(`${API_BASE}/api/register`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json"
+        },
         body: JSON.stringify(userData)
       });
 
@@ -48,11 +46,15 @@ if (registerForm) {
       window.location.href = "login.html";
 
     } catch (error) {
+
       console.error("Register Error:", error);
       alert("Server error. Please try again.");
+
     } finally {
+
       button.classList.remove("loading");
       button.disabled = false;
+
     }
   });
 }
@@ -66,6 +68,7 @@ const loginForm = document.getElementById("loginForm");
 
 if (loginForm) {
   loginForm.addEventListener("submit", async (e) => {
+
     e.preventDefault();
 
     const button = loginForm.querySelector(".auth-btn");
@@ -78,9 +81,12 @@ if (loginForm) {
     };
 
     try {
+
       const res = await fetch(`${API_BASE}/api/login`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json"
+        },
         body: JSON.stringify(loginData)
       });
 
@@ -92,6 +98,7 @@ if (loginForm) {
       }
 
       if (data.token) {
+
         localStorage.setItem("token", data.token);
         localStorage.setItem("role", data.role);
 
@@ -105,11 +112,15 @@ if (loginForm) {
       }
 
     } catch (error) {
+
       console.error("Login Error:", error);
       alert("Server error. Please try again.");
+
     } finally {
+
       button.classList.remove("loading");
       button.disabled = false;
+
     }
   });
 }

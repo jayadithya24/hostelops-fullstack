@@ -11,9 +11,11 @@ const app = express();
 
 app.use(cors({
   origin: [
-    "http://localhost:5500",   // for local testing
+    "http://localhost:5500",
     "http://127.0.0.1:5500",
-    "https://gentle-centaur-dc63d9.netlify.app"  // your Netlify URL
+    "http://localhost:5501",
+    "http://127.0.0.1:5501",
+    "https://gentle-centaur-dc63d9.netlify.app"
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
