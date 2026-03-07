@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const API = "https://hostelops-fullstack.onrender.com";
 
@@ -10,6 +11,7 @@ export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e) {
@@ -112,33 +114,45 @@ export default function Register() {
             onChange={(e) => setEmail(e.target.value)}
           />
 
-          <input
-            type="password"
-            placeholder="Password"
-            required
-            className="w-full p-3 rounded-lg bg-slate-800 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-400"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <div className="relative">
+
+<input
+  type={showPassword ? "text" : "password"}
+  placeholder="Password"
+  required
+  className="w-full p-3 rounded-lg bg-slate-800 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-400"
+  value={password}
+  onChange={(e) => setPassword(e.target.value)}
+/>
+
+<button
+  type="button"
+  onClick={() => setShowPassword(!showPassword)}
+  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+>
+  {showPassword ? <FaEyeSlash /> : <FaEye />}
+</button>
+
+</div>
 
           {/* Register Button */}
 
           <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-teal-500 hover:bg-teal-600 py-3 rounded-lg font-semibold transition flex items-center justify-center gap-2"
-          >
+  type="submit"
+  disabled={loading}
+  className="w-full bg-gradient-to-r from-teal-400 to-blue-500 py-3 rounded-lg font-semibold text-black transition flex items-center justify-center gap-2 hover:opacity-90 disabled:opacity-70"
+>
 
-            {loading ? (
-              <>
-                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                Registering...
-              </>
-            ) : (
-              "Register"
-            )}
+  {loading ? (
+    <>
+      <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
+      Registering...
+    </>
+  ) : (
+    "Register"
+  )}
 
-          </button>
+</button>
 
         </form>
 

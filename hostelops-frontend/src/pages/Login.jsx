@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { loginUser } from "../api/api";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function Login() {
 
@@ -12,7 +13,7 @@ export default function Login() {
     email: "",
     password: ""
   });
-
+const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   function handleChange(e) {
@@ -132,22 +133,26 @@ export default function Login() {
 
             </div>
 
-            <div>
+            <div className="relative mt-1">
 
-              <label className="text-sm text-gray-400">
-                Password
-              </label>
+<input
+  type={showPassword ? "text" : "password"}
+  name="password"
+  value={form.password}
+  onChange={handleChange}
+  placeholder="••••••••"
+  className="w-full bg-slate-800 p-3 rounded-lg border border-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-400"
+/>
 
-              <input
-                type="password"
-                name="password"
-                value={form.password}
-                onChange={handleChange}
-                placeholder="••••••••"
-                className="w-full mt-1 bg-slate-800 p-3 rounded-lg border border-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-400"
-              />
+<button
+  type="button"
+  onClick={() => setShowPassword(!showPassword)}
+  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+>
+  {showPassword ? <FaEyeSlash /> : <FaEye />}
+</button>
 
-            </div>
+</div>
 
             {/* LOGIN BUTTON */}
 
