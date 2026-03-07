@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { getComplaints, updateComplaintStatus, deleteComplaint } from "../api/api";
 
+
 import {
   PieChart,
   Pie,
@@ -26,6 +27,7 @@ export default function Admin() {
   const [statusFilter, setStatusFilter] = useState("All");
   const [search, setSearch] = useState("");
 
+  const [selectedComplaint, setSelectedComplaint] = useState(null);
   async function loadComplaints() {
 
     const data = await getComplaints(token);
@@ -56,34 +58,6 @@ export default function Admin() {
     await updateComplaintStatus(id, status, token);
     loadComplaints();
   }
-
-
-
-  function handleView(c) {
-
-  alert(
-`Student Details
-
-Name: ${c.name}
-Enrollment: ${c.enrollment}
-
-Course: ${c.course}
-Branch: ${c.branch}
-Semester: ${c.semester}
-
-Hostel: ${c.hostelType}
-Room No: ${c.roomNumber}
-
-Complaint Details
-
-Category: ${c.category}
-Description: ${c.description}
-
-Priority: ${c.priority}
-Status: ${c.status}`
-  );
-
-}
 
 
   async function handleDelete(id) {
@@ -381,7 +355,7 @@ Status: ${c.status}`
                   <div className="flex gap-3">
 
                     <button
-                      onClick={() => handleView(c)}
+                      onClick={() => setSelectedComplaint(c)}
                       className="flex items-center gap-2 bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700"
                     >
                       <FaEye />
@@ -409,7 +383,49 @@ Status: ${c.status}`
         </div>
 
       </div>
+{selectedComplaint && (
 
+<div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+
+  <div className="bg-slate-900 p-6 rounded-xl w-[90%] max-w-lg border border-slate-700">
+
+    <h2 className="text-2xl font-bold mb-4 text-cyan-400">
+      Student Complaint Details
+    </h2>
+
+    <div className="space-y-2 text-gray-300">
+
+      <p><b>Name:</b> {selectedComplaint.name}</p>
+      <p><b>Enrollment:</b> {selectedComplaint.enrollment}</p>
+
+      <p><b>Course:</b> {selectedComplaint.course}</p>
+      <p><b>Branch:</b> {selectedComplaint.branch}</p>
+      <p><b>Semester:</b> {selectedComplaint.semester}</p>
+
+      <p><b>Hostel:</b> {selectedComplaint.hostelType}</p>
+      <p><b>Room No:</b> {selectedComplaint.roomNumber}</p>
+
+      <hr className="my-3 border-slate-700"/>
+
+      <p><b>Category:</b> {selectedComplaint.category}</p>
+      <p><b>Description:</b> {selectedComplaint.description}</p>
+      <p><b>Priority:</b> {selectedComplaint.priority}</p>
+      <p><b>Status:</b> {selectedComplaint.status}</p>
+
+    </div>
+
+    <button
+      onClick={() => setSelectedComplaint(null)}
+      className="mt-6 bg-red-500 px-4 py-2 rounded-lg hover:bg-red-600"
+    >
+      Close
+    </button>
+
+  </div>
+
+</div>
+
+)}
     </div>
   );
 }
