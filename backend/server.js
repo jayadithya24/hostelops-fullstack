@@ -111,22 +111,29 @@ app.post("/api/register", async (req, res) => {
 ================================= */
 app.post("/api/login", async (req, res) => {
   try {
-    let { email, password } = req.body;
+
+    let { email, password, role } = req.body;
 
     email = email?.trim().toLowerCase();
     password = password?.trim();
 
-    if (!email || !password) {
-      return res.status(400).json({ message: "Email and password required" });
-    }
-
     const user = await User.findOne({ email });
+
     if (!user)
       return res.status(400).json({ message: "User not found" });
 
     const isMatch = await bcrypt.compare(password, user.password);
+
     if (!isMatch)
       return res.status(400).json({ message: "Invalid password" });
+
+    /* 🚨 ROLE VALIDATION */
+
+    if (user.role !== role) {
+      return res.status(403).json({
+        message: `This account must login through ${user.role} panel`
+      });
+    }
 
     const token = jwt.sign(
       { id: user._id, role: user.role },

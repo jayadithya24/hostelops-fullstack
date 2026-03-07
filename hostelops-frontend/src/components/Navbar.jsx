@@ -13,7 +13,7 @@ export default function Navbar(){
 
   return(
 
-    <header className="bg-slate-900 border-b border-slate-800">
+    <header className="sticky top-0 z-50 bg-slate-900 border-b border-slate-800">
 
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 

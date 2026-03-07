@@ -5,14 +5,14 @@ export default API;
 
 /* ================= LOGIN ================= */
 
-export async function loginUser(email, password) {
+export async function loginUser(email, password, role) {
 
   const res = await fetch(`${API}/api/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ email, password })
+    body: JSON.stringify({ email, password, role })
   });
 
   return res.json();

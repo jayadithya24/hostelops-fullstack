@@ -44,9 +44,15 @@ export default function ComplaintCard({ complaint }) {
 
           <div className="flex items-center gap-3 mt-2">
 
-            <span className="px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 text-sm">
-              {complaint.priority} Priority
-            </span>
+            <span
+  className={`px-3 py-1 rounded-full text-sm font-medium
+    ${complaint.priority === "Low" && "bg-blue-100 text-blue-600"}
+    ${complaint.priority === "Medium" && "bg-orange-100 text-orange-600"}
+    ${complaint.priority === "High" && "bg-red-100 text-red-600"}
+  `}
+>
+  {complaint.priority} Priority
+</span>
 
             <span className="text-gray-400 text-sm">
               {complaint.createdAt

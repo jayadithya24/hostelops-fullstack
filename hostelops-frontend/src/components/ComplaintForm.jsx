@@ -20,24 +20,28 @@ export default function ComplaintForm({refresh}){
 
   async function handleSubmit(e){
 
-    e.preventDefault();
+  e.preventDefault();
 
-    await submitComplaint(form);
+  const token = localStorage.getItem("token");
 
+  const res = await submitComplaint(form, token);
+
+  if(res.message){
     refresh();
-
-    setForm({
-      name:"",
-      enrollment:"",
-      course:"",
-      branch:"",
-      semester:"",
-      category:"Electrical",
-      description:"",
-      priority:"Low"
-    });
-
   }
+
+  setForm({
+    name:"",
+    enrollment:"",
+    course:"",
+    branch:"",
+    semester:"",
+    category:"Electrical",
+    description:"",
+    priority:"Low"
+  });
+
+}
 
   return(
 
