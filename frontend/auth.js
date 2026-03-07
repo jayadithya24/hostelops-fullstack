@@ -1,7 +1,19 @@
 /* =========================
+   API BASE URL
+========================= */
+
+// Automatically switch API depending on environment
+const API_BASE =
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1"
+    ? "http://localhost:5000"
+    : "https://hostelops-fullstack.onrender.com";
+
+
+/* =========================
    REGISTER
 ========================= */
-const API_BASE = "https://hostelops-fullstack.onrender.com";
+
 const registerForm = document.getElementById("registerForm");
 
 if (registerForm) {
@@ -36,8 +48,8 @@ if (registerForm) {
       window.location.href = "login.html";
 
     } catch (error) {
+      console.error("Register Error:", error);
       alert("Server error. Please try again.");
-      console.error(error);
     } finally {
       button.classList.remove("loading");
       button.disabled = false;
@@ -83,6 +95,8 @@ if (loginForm) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("role", data.role);
 
+        alert("Login Successful");
+
         if (data.role === "admin") {
           window.location.href = "admin.html";
         } else {
@@ -91,8 +105,8 @@ if (loginForm) {
       }
 
     } catch (error) {
+      console.error("Login Error:", error);
       alert("Server error. Please try again.");
-      console.error(error);
     } finally {
       button.classList.remove("loading");
       button.disabled = false;

@@ -1,5 +1,16 @@
 (() => {
-const API_BASE = "https://hostelops-fullstack.onrender.com";
+
+  /* =========================
+     API BASE URL
+  ========================= */
+
+  const API_BASE =
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+      ? "http://localhost:5000"
+      : "https://hostelops-fullstack.onrender.com";
+
+
   /* =========================
      AUTH + ROLE CHECK
   ========================= */
@@ -12,19 +23,22 @@ const API_BASE = "https://hostelops-fullstack.onrender.com";
     return;
   }
 
-  // Page protection
-  if (window.location.pathname.includes("index") && role === "admin") {
-    window.location.href = "admin.html";
-    return;
-  }
-
+  // Student should not access admin page
   if (window.location.pathname.includes("admin") && role !== "admin") {
     window.location.href = "index.html";
     return;
   }
 
-  // ✅ SHOW PAGE ONLY AFTER AUTH CHECK
-document.body.style.display = "block";
+  // Admin should not access student dashboard
+  if (window.location.pathname.includes("index") && role === "admin") {
+    window.location.href = "admin.html";
+    return;
+  }
+
+  // Show page only after auth validation
+  document.body.style.display = "block";
+
+
   /* =========================
      ELEMENTS
   ========================= */
@@ -33,11 +47,13 @@ document.body.style.display = "block";
   const complaintList = document.getElementById("complaintList");
   const statusFilter = document.getElementById("statusFilter");
 
+
   /* =========================
      SUBMIT COMPLAINT (Student)
   ========================= */
 
   if (form && role === "student") {
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
@@ -49,6 +65,7 @@ document.body.style.display = "block";
       };
 
       try {
+
         const res = await fetch(`${API_BASE}/api/complaints`, {
           method: "POST",
           headers: {
@@ -65,17 +82,22 @@ document.body.style.display = "block";
         }
 
         const data = await res.json();
+
         alert(data.message);
 
         form.reset();
         loadComplaints();
 
       } catch (error) {
-        console.error(error);
+
+        console.error("Submit Complaint Error:", error);
         alert("Failed to submit complaint");
+
       }
     });
+
   }
+
 
   /* =========================
      LOAD COMPLAINTS
@@ -90,7 +112,9 @@ document.body.style.display = "block";
       let url = `${API_BASE}/api/complaints`;
 
       if (role === "admin" && statusFilter) {
+
         const selectedStatus = statusFilter.value;
+
         if (selectedStatus && selectedStatus !== "All") {
           url += `?status=${selectedStatus}`;
         }
@@ -110,7 +134,10 @@ document.body.style.display = "block";
 
       const data = await res.json();
 
-      /* ===== ADMIN STATS ===== */
+
+      /* =========================
+         ADMIN DASHBOARD STATS
+      ========================= */
 
       if (role === "admin") {
 
@@ -119,20 +146,23 @@ document.body.style.display = "block";
         const progress = data.filter(c => c.status === "In Progress").length;
         const resolved = data.filter(c => c.status === "Resolved").length;
 
-        document.getElementById("totalCount") &&
-          (document.getElementById("totalCount").innerText = total);
+        if (document.getElementById("totalCount"))
+          document.getElementById("totalCount").innerText = total;
 
-        document.getElementById("pendingCount") &&
-          (document.getElementById("pendingCount").innerText = pending);
+        if (document.getElementById("pendingCount"))
+          document.getElementById("pendingCount").innerText = pending;
 
-        document.getElementById("progressCount") &&
-          (document.getElementById("progressCount").innerText = progress);
+        if (document.getElementById("progressCount"))
+          document.getElementById("progressCount").innerText = progress;
 
-        document.getElementById("resolvedCount") &&
-          (document.getElementById("resolvedCount").innerText = resolved);
+        if (document.getElementById("resolvedCount"))
+          document.getElementById("resolvedCount").innerText = resolved;
       }
 
-      /* ===== RENDER LIST ===== */
+
+      /* =========================
+         RENDER COMPLAINT LIST
+      ========================= */
 
       complaintList.innerHTML = data.map(c => {
 
@@ -159,21 +189,25 @@ document.body.style.display = "block";
       }).join("");
 
     } catch (error) {
-      console.error(error);
+
+      console.error("Load Complaints Error:", error);
       alert("Failed to load complaints");
+
     }
   }
 
+
   /* =========================
-     FILTER
+     FILTER (ADMIN)
   ========================= */
 
   window.applyFilter = function () {
     loadComplaints();
   };
 
+
   /* =========================
-     UPDATE STATUS
+     UPDATE STATUS (ADMIN)
   ========================= */
 
   window.updateStatus = async function (id, status) {
@@ -181,6 +215,7 @@ document.body.style.display = "block";
     if (role !== "admin") return;
 
     try {
+
       const res = await fetch(`${API_BASE}/api/complaints/${id}`, {
         method: "PUT",
         headers: {
@@ -199,19 +234,26 @@ document.body.style.display = "block";
       loadComplaints();
 
     } catch (error) {
-      console.error(error);
+
+      console.error("Update Status Error:", error);
       alert("Failed to update status");
+
     }
   };
+
 
   /* =========================
      LOGOUT
   ========================= */
 
   window.logout = function () {
+
     localStorage.clear();
+
     window.location.href = "login.html";
+
   };
+
 
   /* =========================
      INITIAL LOAD
