@@ -1,48 +1,54 @@
 import { useState } from "react";
 import { submitComplaint } from "../api/api";
 
-export default function ComplaintForm({refresh}){
+export default function ComplaintForm({ refresh }) {
 
-  const [form,setForm] = useState({
-  name: localStorage.getItem("name") || "",
-  enrollment:"",
-  course:"",
-  branch:"",
-  semester:"",
-  category:"Electrical",
-  description:"",
-  priority:"Low"
-});
-  function handleChange(e){
-    setForm({...form,[e.target.name]:e.target.value});
+  const [form, setForm] = useState({
+    name: localStorage.getItem("name") || "",
+    enrollment: "",
+    hostelType: "",
+    roomNumber: "",
+    course: "",
+    branch: "",
+    semester: "",
+    category: "Electrical",
+    description: "",
+    priority: "Low"
+  });
+
+  function handleChange(e) {
+    setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  async function handleSubmit(e){
+  async function handleSubmit(e) {
 
-  e.preventDefault();
+    e.preventDefault();
 
-  const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-  const res = await submitComplaint(form, token);
+    const res = await submitComplaint(form, token);
 
-  if(res.message){
-    refresh();
+    if (res.message) {
+      refresh();
+    }
+
+    // reset form
+    setForm({
+      name: localStorage.getItem("name") || "",
+      enrollment: "",
+      hostelType: "",
+      roomNumber: "",
+      course: "",
+      branch: "",
+      semester: "",
+      category: "Electrical",
+      description: "",
+      priority: "Low"
+    });
+
   }
 
-  setForm({
-  name: localStorage.getItem("name") || "",
-  enrollment:"",
-  course:"",
-  branch:"",
-  semester:"",
-  category:"Electrical",
-  description:"",
-  priority:"Low"
-});
-
-}
-
-  return(
+  return (
 
     <div className="bg-slate-900 p-6 rounded-xl border border-slate-800 mb-8">
 
@@ -52,13 +58,15 @@ export default function ComplaintForm({refresh}){
 
       <form onSubmit={handleSubmit} className="space-y-4">
 
+        {/* Name */}
         <input
-  name="name"
-  value={form.name}
-  readOnly
-  className="w-full bg-slate-800 p-3 rounded-lg cursor-not-allowed"
-/>
+          name="name"
+          value={form.name}
+          readOnly
+          className="w-full bg-slate-800 p-3 rounded-lg cursor-not-allowed"
+        />
 
+        {/* Enrollment */}
         <input
           name="enrollment"
           value={form.enrollment}
@@ -66,67 +74,101 @@ export default function ComplaintForm({refresh}){
           placeholder="Enrollment Number"
           className="w-full bg-slate-800 p-3 rounded-lg"
         />
-<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-  <select className="bg-slate-800 p-3 rounded-xl">
-    <option>Hostel Type</option>
-    <option>Boys Hostel</option>
-    <option>Girls Hostel</option>
-  </select>
+        {/* Hostel + Room */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-  <input
-    type="text"
-    placeholder="Room Number"
-    className="bg-slate-800 p-3 rounded-xl"
-  />
+          <select
+            name="hostelType"
+            value={form.hostelType}
+            onChange={handleChange}
+            className="bg-slate-800 p-3 rounded-xl"
+          >
+            <option value="">Hostel Type</option>
+            <option value="Boys Hostel">Boys Hostel</option>
+            <option value="Girls Hostel">Girls Hostel</option>
+          </select>
 
-</div>
+          <input
+            type="text"
+            name="roomNumber"
+            value={form.roomNumber}
+            onChange={handleChange}
+            placeholder="Room Number"
+            className="bg-slate-800 p-3 rounded-xl"
+          />
+
+        </div>
+
+        {/* Course Branch Semester */}
         <div className="grid grid-cols-3 gap-3">
 
-          <select name="course" onChange={handleChange} className="bg-slate-800 p-3 rounded-lg">
-            <option>Course</option>
-  <option>BCA</option>
-  <option>BTech</option>
-  <option>MCA</option>
-  <option>MBA</option>
-  <option>BSc</option>
-  <option>MSc</option>
-  <option>BBA</option>
+          <select
+            name="course"
+            value={form.course}
+            onChange={handleChange}
+            className="bg-slate-800 p-3 rounded-lg"
+          >
+            <option value="">Course</option>
+            <option>BCA</option>
+            <option>BTech</option>
+            <option>MCA</option>
+            <option>MBA</option>
+            <option>BSc</option>
+            <option>MSc</option>
+            <option>BBA</option>
           </select>
 
-          <select name="branch" onChange={handleChange} className="bg-slate-800 p-3 rounded-lg">
-             <option>Branch</option>
-  <option>Computer Science</option>
-  <option>Information Science</option>
-  <option>AIML</option>
-  <option>Mechanical</option>
-  <option>Civil</option>
-  <option>Electronics</option>
-  <option>Electrical</option>
-  <option>Data Science</option>
+          <select
+            name="branch"
+            value={form.branch}
+            onChange={handleChange}
+            className="bg-slate-800 p-3 rounded-lg"
+          >
+            <option value="">Branch</option>
+            <option>Computer Science</option>
+            <option>Information Science</option>
+            <option>AIML</option>
+            <option>Mechanical</option>
+            <option>Civil</option>
+            <option>Electronics</option>
+            <option>Electrical</option>
+            <option>Data Science</option>
           </select>
 
-          <select name="semester" onChange={handleChange} className="bg-slate-800 p-3 rounded-lg">
-            <option>Semester</option>
-           <option>1</option>
-  <option>2</option>
-  <option>3</option>
-  <option>4</option>
-  <option>5</option>
-  <option>6</option>
-  <option>7</option>
-  <option>8</option>
+          <select
+            name="semester"
+            value={form.semester}
+            onChange={handleChange}
+            className="bg-slate-800 p-3 rounded-lg"
+          >
+            <option value="">Semester</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
           </select>
 
         </div>
 
-        <select name="category" onChange={handleChange} className="bg-slate-800 p-3 rounded-lg">
+        {/* Category */}
+        <select
+          name="category"
+          value={form.category}
+          onChange={handleChange}
+          className="bg-slate-800 p-3 rounded-lg"
+        >
           <option>Electrical</option>
           <option>Furniture</option>
           <option>Cleanliness</option>
           <option>Plumbing</option>
         </select>
 
+        {/* Description */}
         <textarea
           name="description"
           value={form.description}
@@ -135,12 +177,19 @@ export default function ComplaintForm({refresh}){
           className="w-full bg-slate-800 p-3 rounded-lg"
         />
 
-        <select name="priority" onChange={handleChange} className="bg-slate-800 p-3 rounded-lg">
+        {/* Priority */}
+        <select
+          name="priority"
+          value={form.priority}
+          onChange={handleChange}
+          className="bg-slate-800 p-3 rounded-lg"
+        >
           <option>Low</option>
           <option>Medium</option>
           <option>High</option>
         </select>
 
+        {/* Submit */}
         <button className="w-full bg-gradient-to-r from-teal-400 to-blue-500 p-3 rounded-lg font-semibold">
           ✈ Submit Complaint
         </button>

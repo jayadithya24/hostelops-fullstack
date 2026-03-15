@@ -315,9 +315,19 @@ export default function Admin() {
 
                     <div className="flex flex-wrap items-center gap-3 mt-2">
 
-                      <span className="px-3 py-1 rounded-full bg-orange-200 text-orange-700 text-sm">
-                        {c.priority} Priority
-                      </span>
+                      <span
+  className={`px-3 py-1 rounded-full text-sm font-medium ${
+    c.priority === "High"
+      ? "bg-red-500/20 text-red-400"
+      : c.priority === "Medium"
+      ? "bg-yellow-500/20 text-yellow-400"
+      : c.priority === "Low"
+      ? "bg-green-500/20 text-green-400"
+      : "bg-gray-500/20 text-gray-400"
+  }`}
+>
+  {c.priority} Priority
+</span>
 
                       <span className="flex items-center gap-1 text-gray-400 text-sm">
                         <FiClock />
