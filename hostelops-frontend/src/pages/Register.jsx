@@ -17,7 +17,6 @@ export default function Register() {
   async function handleSubmit(e) {
 
     e.preventDefault();
-
     setLoading(true);
 
     try {
@@ -54,7 +53,6 @@ export default function Register() {
     }
 
     setLoading(false);
-
   }
 
   return (
@@ -63,16 +61,12 @@ export default function Register() {
 
       <div className="w-full max-w-md bg-slate-900 p-8 rounded-xl shadow-lg border border-slate-800">
 
-        {/* Back Button */}
-
         <Link
           to="/"
           className="text-teal-400 hover:text-teal-300 text-sm mb-4 inline-block"
         >
           ← Back to Home
         </Link>
-
-        {/* Header */}
 
         <div className="text-center mb-6">
 
@@ -91,8 +85,6 @@ export default function Register() {
         <p className="text-gray-400 text-center mb-6">
           Register to submit and manage complaints
         </p>
-
-        {/* Form */}
 
         <form onSubmit={handleSubmit} className="space-y-4">
 
@@ -116,47 +108,43 @@ export default function Register() {
 
           <div className="relative">
 
-<input
-  type={showPassword ? "text" : "password"}
-  placeholder="Password"
-  required
-  className="w-full p-3 rounded-lg bg-slate-800 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-400"
-  value={password}
-  onChange={(e) => setPassword(e.target.value)}
-/>
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              required
+              className="w-full p-3 rounded-lg bg-slate-800 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-400"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
-<button
-  type="button"
-  onClick={() => setShowPassword(!showPassword)}
-  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
->
-  {showPassword ? <FaEyeSlash /> : <FaEye />}
-</button>
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
 
-</div>
-
-          {/* Register Button */}
+          </div>
 
           <button
-  type="submit"
-  disabled={loading}
-  className="w-full bg-gradient-to-r from-teal-400 to-blue-500 py-3 rounded-lg font-semibold text-black transition flex items-center justify-center gap-2 hover:opacity-90 disabled:opacity-70"
->
+            type="submit"
+            disabled={loading}
+            className="w-full bg-gradient-to-r from-teal-400 to-blue-500 py-3 rounded-lg font-semibold text-black transition flex items-center justify-center gap-2 hover:opacity-90 disabled:opacity-70"
+          >
 
-  {loading ? (
-    <>
-      <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
-      Registering...
-    </>
-  ) : (
-    "Register"
-  )}
+            {loading ? (
+              <>
+                <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
+                Registering...
+              </>
+            ) : (
+              "Register"
+            )}
 
-</button>
+          </button>
 
         </form>
-
-        {/* Login Link */}
 
         <p className="text-center text-gray-400 mt-6">
 

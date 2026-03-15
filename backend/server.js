@@ -169,7 +169,11 @@ app.post("/api/login", async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.json({ token, role: user.role });
+    res.json({
+  token,
+  role: user.role,
+  name: user.name
+});
 
   } catch (err) {
 

@@ -4,16 +4,15 @@ import { submitComplaint } from "../api/api";
 export default function ComplaintForm({refresh}){
 
   const [form,setForm] = useState({
-    name:"",
-    enrollment:"",
-    course:"",
-    branch:"",
-    semester:"",
-    category:"Electrical",
-    description:"",
-    priority:"Low"
-  });
-
+  name: localStorage.getItem("name") || "",
+  enrollment:"",
+  course:"",
+  branch:"",
+  semester:"",
+  category:"Electrical",
+  description:"",
+  priority:"Low"
+});
   function handleChange(e){
     setForm({...form,[e.target.name]:e.target.value});
   }
@@ -31,15 +30,15 @@ export default function ComplaintForm({refresh}){
   }
 
   setForm({
-    name:"",
-    enrollment:"",
-    course:"",
-    branch:"",
-    semester:"",
-    category:"Electrical",
-    description:"",
-    priority:"Low"
-  });
+  name: localStorage.getItem("name") || "",
+  enrollment:"",
+  course:"",
+  branch:"",
+  semester:"",
+  category:"Electrical",
+  description:"",
+  priority:"Low"
+});
 
 }
 
@@ -54,12 +53,11 @@ export default function ComplaintForm({refresh}){
       <form onSubmit={handleSubmit} className="space-y-4">
 
         <input
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          placeholder="Your Name"
-          className="w-full bg-slate-800 p-3 rounded-lg"
-        />
+  name="name"
+  value={form.name}
+  readOnly
+  className="w-full bg-slate-800 p-3 rounded-lg cursor-not-allowed"
+/>
 
         <input
           name="enrollment"

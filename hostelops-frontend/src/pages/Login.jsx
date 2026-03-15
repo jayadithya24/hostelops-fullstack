@@ -13,7 +13,8 @@ export default function Login() {
     email: "",
     password: ""
   });
-const [showPassword, setShowPassword] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   function handleChange(e) {
@@ -23,18 +24,29 @@ const [showPassword, setShowPassword] = useState(false);
   async function handleSubmit(e) {
 
     e.preventDefault();
-
     setLoading(true);
 
     try {
 
       const res = await loginUser(form.email, form.password, role);
 
+      console.log("Login Response:", res); // helpful for debugging
+
       if (res.token) {
 
+        // Save login data
         localStorage.setItem("token", res.token);
         localStorage.setItem("role", res.role);
 
+        // Save name only if backend sends it
+        if (res.name) {
+          localStorage.setItem("name", res.name);
+        } else {
+          // remove wrong value if name not returned
+          localStorage.removeItem("name");
+        }
+
+        // Redirect based on role
         if (res.role === "admin") {
           navigate("/admin");
         } else {
@@ -42,7 +54,7 @@ const [showPassword, setShowPassword] = useState(false);
         }
 
       } else {
-        alert(res.message);
+        alert(res.message || "Login failed");
       }
 
     } catch (err) {
@@ -90,6 +102,7 @@ const [showPassword, setShowPassword] = useState(false);
           <div className="flex bg-slate-800 rounded-xl p-1 mb-6">
 
             <button
+              type="button"
               onClick={() => setRole("student")}
               className={`flex-1 py-2 rounded-lg ${
                 role === "student"
@@ -101,6 +114,7 @@ const [showPassword, setShowPassword] = useState(false);
             </button>
 
             <button
+              type="button"
               onClick={() => setRole("admin")}
               className={`flex-1 py-2 rounded-lg ${
                 role === "admin"
@@ -118,7 +132,6 @@ const [showPassword, setShowPassword] = useState(false);
           <form onSubmit={handleSubmit} className="space-y-5">
 
             <div>
-
               <label className="text-sm text-gray-400">
                 Email address
               </label>
@@ -130,29 +143,28 @@ const [showPassword, setShowPassword] = useState(false);
                 placeholder="you@example.com"
                 className="w-full mt-1 bg-slate-800 p-3 rounded-lg border border-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-400"
               />
-
             </div>
 
             <div className="relative mt-1">
 
-<input
-  type={showPassword ? "text" : "password"}
-  name="password"
-  value={form.password}
-  onChange={handleChange}
-  placeholder="••••••••"
-  className="w-full bg-slate-800 p-3 rounded-lg border border-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-400"
-/>
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+                placeholder="••••••••"
+                className="w-full bg-slate-800 p-3 rounded-lg border border-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-400"
+              />
 
-<button
-  type="button"
-  onClick={() => setShowPassword(!showPassword)}
-  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
->
-  {showPassword ? <FaEyeSlash /> : <FaEye />}
-</button>
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
 
-</div>
+            </div>
 
             {/* LOGIN BUTTON */}
 
@@ -177,16 +189,13 @@ const [showPassword, setShowPassword] = useState(false);
           {/* REGISTER LINK */}
 
           <p className="text-center text-gray-400 mt-6">
-
             Don't have an account?{" "}
-
             <Link
               to="/register"
               className="text-teal-400 hover:underline"
             >
               Register here
             </Link>
-
           </p>
 
         </div>
