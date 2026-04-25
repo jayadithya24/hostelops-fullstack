@@ -49,9 +49,7 @@ export default function Home() {
 
           <h1 className="text-5xl md:text-6xl font-extrabold max-w-4xl mx-auto leading-tight">
             <span className="text-brand-dark">Smart Hostel </span>
-            <span className="bg-gradient-to-r from-brand-yellow via-brand-orange to-brand-yellow bg-clip-text text-transparent">
-              Complaint Management
-            </span>
+            <span className="text-brand-orange">Complaint Management</span>
           </h1>
 
           <p className="text-brand-dark/70 mt-6 max-w-2xl mx-auto">
