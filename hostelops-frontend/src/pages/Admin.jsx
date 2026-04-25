@@ -138,7 +138,7 @@ export default function Admin() {
 
   return (
 
-    <div className="min-h-screen bg-slate-950 text-white">
+    <div className="min-h-screen bg-brand-yellow/10 text-brand-dark">
 
       <Navbar />
 
@@ -148,31 +148,26 @@ export default function Admin() {
         {/* STATS */}
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-
-          <div className="bg-gradient-to-r from-cyan-500 to-blue-500 p-6 rounded-2xl shadow-lg">
-            <p className="text-sm opacity-80">Total</p>
-            <h2 className="text-3xl font-bold">{total}</h2>
-            <p className="text-sm opacity-80">All complaints</p>
+          <div className="bg-white border border-brand-yellow/40 p-6 rounded-2xl shadow-sm">
+            <p className="text-sm text-brand-dark/70">TOTAL</p>
+            <h2 className="text-3xl font-bold text-brand-orange">{total}</h2>
+            <p className="text-sm text-brand-dark/50">All complaints</p>
           </div>
-
-          <div className="bg-gradient-to-r from-orange-500 to-red-500 p-6 rounded-2xl shadow-lg">
-            <p className="text-sm opacity-80">Pending</p>
-            <h2 className="text-3xl font-bold">{pending}</h2>
-            <p className="text-sm opacity-80">Awaiting action</p>
+          <div className="bg-white border border-red-200 p-6 rounded-2xl shadow-sm">
+            <p className="text-sm text-red-500 font-semibold">PENDING</p>
+            <h2 className="text-3xl font-bold text-red-500">{pending}</h2>
+            <p className="text-sm text-brand-dark/50">Awaiting action</p>
           </div>
-
-          <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 rounded-2xl shadow-lg">
-            <p className="text-sm opacity-80">In Progress</p>
-            <h2 className="text-3xl font-bold">{progress}</h2>
-            <p className="text-sm opacity-80">Being worked on</p>
+          <div className="bg-white border border-blue-200 p-6 rounded-2xl shadow-sm">
+            <p className="text-sm text-blue-500 font-semibold">IN PROGRESS</p>
+            <h2 className="text-3xl font-bold text-blue-500">{progress}</h2>
+            <p className="text-sm text-brand-dark/50">Being worked on</p>
           </div>
-
-          <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-6 rounded-2xl shadow-lg">
-            <p className="text-sm opacity-80">Resolved</p>
-            <h2 className="text-3xl font-bold">{resolved}</h2>
-            <p className="text-sm opacity-80">Completed</p>
+          <div className="bg-white border border-green-200 p-6 rounded-2xl shadow-sm">
+            <p className="text-sm text-green-600 font-semibold">RESOLVED</p>
+            <h2 className="text-3xl font-bold text-green-600">{resolved}</h2>
+            <p className="text-sm text-brand-dark/50">Completed</p>
           </div>
-
         </div>
 
 
@@ -180,19 +175,11 @@ export default function Admin() {
         {/* CHARTS */}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-
           {/* CATEGORY */}
-
-          <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700">
-
-            <h3 className="text-xl font-semibold mb-6">
-              Complaints by Category
-            </h3>
-
+          <div className="bg-white p-6 rounded-2xl border border-brand-yellow/40">
+            <h3 className="text-xl font-semibold mb-6 text-brand-dark">Complaints by Category</h3>
             <ResponsiveContainer width="100%" height={300}>
-
               <PieChart>
-
                 <Pie
                   data={categoryData}
                   dataKey="value"
@@ -200,51 +187,27 @@ export default function Admin() {
                   outerRadius={100}
                   label
                 >
-
                   {categoryData.map((entry, index) => (
                     <Cell key={index} fill={COLORS[index % COLORS.length]} />
                   ))}
-
                 </Pie>
-
                 <Tooltip />
-
               </PieChart>
-
             </ResponsiveContainer>
-
           </div>
-
-
-
           {/* PRIORITY */}
-
-          <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700">
-
-            <h3 className="text-xl font-semibold mb-6">
-              Complaints by Priority
-            </h3>
-
+          <div className="bg-white p-6 rounded-2xl border border-brand-yellow/40">
+            <h3 className="text-xl font-semibold mb-6 text-brand-dark">Complaints by Priority</h3>
             <ResponsiveContainer width="100%" height={300}>
-
               <BarChart data={priorityData}>
-
-                <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-
-                <XAxis dataKey="name" stroke="#94a3b8" />
-
-                <YAxis stroke="#94a3b8" />
-
+                <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
+                <XAxis dataKey="name" stroke="#888" />
+                <YAxis stroke="#888" />
                 <Tooltip />
-
-                <Bar dataKey="value" fill="#3b82f6" radius={[10,10,0,0]} />
-
+                <Bar dataKey="value" fill="#FFB300" radius={[10,10,0,0]} />
               </BarChart>
-
             </ResponsiveContainer>
-
           </div>
-
         </div>
 
 
@@ -252,26 +215,23 @@ export default function Admin() {
         {/* SEARCH + FILTER */}
 
         <div className="flex flex-col md:flex-row gap-4 mb-10">
-
           <input
             type="text"
             placeholder="Search complaints..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex-1 bg-slate-800 p-3 rounded-xl border border-slate-700"
+            className="flex-1 bg-white p-3 rounded-xl border border-brand-yellow/40"
           />
-
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="bg-slate-800 p-3 rounded-xl border border-slate-700 md:w-48"
+            className="bg-white p-3 rounded-xl border border-brand-yellow/40 md:w-48"
           >
             <option>All</option>
             <option>Pending</option>
             <option>In Progress</option>
             <option>Resolved</option>
           </select>
-
         </div>
 
 
@@ -285,154 +245,113 @@ export default function Admin() {
 
 
         <div className="space-y-6">
-
           {complaints.map(c => (
-
             <div
               key={c._id}
-              className="bg-slate-800 p-6 rounded-2xl border border-slate-700 hover:border-cyan-500 transition"
+              className="bg-white p-6 rounded-2xl border border-brand-yellow/40 hover:border-brand-orange transition"
             >
-
               <div className="flex flex-col md:flex-row justify-between gap-6">
-
                 {/* LEFT */}
-
                 <div className="flex gap-4">
-
-                  <div className="w-12 h-12 flex items-center justify-center rounded-xl bg-slate-700 text-cyan-400 text-xl">
+                  <div className="w-12 h-12 flex items-center justify-center rounded-xl bg-brand-yellow/30 text-brand-orange text-xl">
                     {iconMap[c.category] || <FaWrench />}
                   </div>
-
                   <div>
-
-                    <h3 className="text-cyan-400 text-lg font-semibold">
+                    <h3 className="text-brand-orange text-lg font-semibold">
                       {c.category}
                     </h3>
-
-                    <p className="text-gray-300">
+                    <p className="text-brand-dark/80">
                       {c.description}
                     </p>
-
                     <div className="flex flex-wrap items-center gap-3 mt-2">
-
                       <span
-  className={`px-3 py-1 rounded-full text-sm font-medium ${
-    c.priority === "High"
-      ? "bg-red-500/20 text-red-400"
-      : c.priority === "Medium"
-      ? "bg-yellow-500/20 text-yellow-400"
-      : c.priority === "Low"
-      ? "bg-green-500/20 text-green-400"
-      : "bg-gray-500/20 text-gray-400"
-  }`}
->
-  {c.priority} Priority
-</span>
-
-                      <span className="flex items-center gap-1 text-gray-400 text-sm">
+                        className={`px-3 py-1 rounded-full text-sm font-medium ${
+                          c.priority === "High"
+                            ? "bg-red-100 text-red-600"
+                            : c.priority === "Medium"
+                            ? "bg-yellow-100 text-yellow-700"
+                            : c.priority === "Low"
+                            ? "bg-green-100 text-green-700"
+                            : "bg-gray-100 text-gray-700"
+                        }`}
+                      >
+                        {c.priority} Priority
+                      </span>
+                      <span className="flex items-center gap-1 text-gray-500 text-sm">
                         <FiClock />
                         {c.createdAt
                           ? new Date(c.createdAt).toLocaleDateString()
                           : "Just now"}
                       </span>
-
-                      <span className="text-gray-400 text-sm">
+                      <span className="text-gray-500 text-sm">
                         By: {c.name || "Student"}
                       </span>
-
                     </div>
-
                   </div>
-
                 </div>
-
-
-
                 {/* RIGHT */}
-
                 <div className="flex flex-col gap-3 md:items-end">
-
                   <select
                     value={c.status}
                     onChange={(e)=>changeStatus(c._id,e.target.value)}
-                    className="bg-slate-700 p-3 rounded-lg w-full md:w-40"
+                    className="bg-brand-yellow/20 p-3 rounded-lg w-full md:w-40 border border-brand-yellow/40"
                   >
                     <option>Pending</option>
                     <option>In Progress</option>
                     <option>Resolved</option>
                   </select>
-
                   <div className="flex gap-3">
-
                     <button
                       onClick={() => setSelectedComplaint(c)}
-                      className="flex items-center gap-2 bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700"
+                      className="flex items-center gap-2 bg-blue-100 text-blue-700 px-4 py-2 rounded-lg hover:bg-blue-200"
                     >
                       <FaEye />
                       View
                     </button>
-
                     <button
                       onClick={() => handleDelete(c._id)}
-                      className="flex items-center gap-2 bg-red-600 px-4 py-2 rounded-lg hover:bg-red-700"
+                      className="flex items-center gap-2 bg-red-100 text-red-600 px-4 py-2 rounded-lg hover:bg-red-200"
                     >
                       <FaTrash />
                       Delete
                     </button>
-
                   </div>
-
                 </div>
-
               </div>
-
             </div>
-
           ))}
-
         </div>
 
       </div>
 {selectedComplaint && (
 
-<div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
 
-  <div className="bg-slate-900 p-6 rounded-xl w-[90%] max-w-lg border border-slate-700">
-
-    <h2 className="text-2xl font-bold mb-4 text-cyan-400">
+<div className="fixed inset-0 bg-brand-yellow/60 flex items-center justify-center z-50">
+  <div className="bg-white p-6 rounded-xl w-[90%] max-w-lg border border-brand-yellow">
+    <h2 className="text-2xl font-bold mb-4 text-blue-500">
       Student Complaint Details
     </h2>
-
-    <div className="space-y-2 text-gray-300">
-
+    <div className="space-y-2 text-brand-dark">
       <p><b>Name:</b> {selectedComplaint.name}</p>
       <p><b>Enrollment:</b> {selectedComplaint.enrollment}</p>
-
       <p><b>Course:</b> {selectedComplaint.course}</p>
       <p><b>Branch:</b> {selectedComplaint.branch}</p>
       <p><b>Semester:</b> {selectedComplaint.semester}</p>
-
       <p><b>Hostel:</b> {selectedComplaint.hostelType}</p>
       <p><b>Room No:</b> {selectedComplaint.roomNumber}</p>
-
-      <hr className="my-3 border-slate-700"/>
-
-      <p><b>Category:</b> {selectedComplaint.category}</p>
-      <p><b>Description:</b> {selectedComplaint.description}</p>
-      <p><b>Priority:</b> {selectedComplaint.priority}</p>
-      <p><b>Status:</b> {selectedComplaint.status}</p>
-
+      <hr className="my-3 border-brand-yellow/40"/>
+      <p><b>Category:</b> <span className="text-brand-orange">{selectedComplaint.category}</span></p>
+      <p><b>Description:</b> <span className="text-brand-dark/80">{selectedComplaint.description}</span></p>
+      <p><b>Priority:</b> <span className="text-red-500">{selectedComplaint.priority}</span></p>
+      <p><b>Status:</b> <span className="text-blue-500">{selectedComplaint.status}</span></p>
     </div>
-
     <button
       onClick={() => setSelectedComplaint(null)}
-      className="mt-6 bg-red-500 px-4 py-2 rounded-lg hover:bg-red-600"
+      className="mt-6 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
     >
       Close
     </button>
-
   </div>
-
 </div>
 
 )}

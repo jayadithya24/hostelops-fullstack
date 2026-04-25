@@ -50,12 +50,10 @@ export default function ComplaintForm({ refresh }) {
 
   return (
 
-    <div className="bg-slate-900 p-6 rounded-xl border border-slate-800 mb-8">
-
-      <h2 className="text-xl font-semibold text-white mb-6">
+    <div className="bg-white p-8 rounded-2xl border border-brand-yellow/40 mb-8 shadow-sm">
+      <h2 className="text-xl font-bold text-brand-orange mb-6">
         ➕ Submit a Complaint
       </h2>
-
       <form onSubmit={handleSubmit} className="space-y-4">
 
         {/* Name */}
@@ -63,7 +61,7 @@ export default function ComplaintForm({ refresh }) {
           name="name"
           value={form.name}
           readOnly
-          className="w-full bg-slate-800 p-3 rounded-lg cursor-not-allowed"
+          className="w-full bg-brand-yellow/10 p-3 rounded-lg cursor-not-allowed border border-brand-yellow/40"
         />
 
         {/* Enrollment */}
@@ -72,42 +70,38 @@ export default function ComplaintForm({ refresh }) {
           value={form.enrollment}
           onChange={handleChange}
           placeholder="Enrollment Number"
-          className="w-full bg-slate-800 p-3 rounded-lg"
+          className="w-full bg-brand-yellow/10 p-3 rounded-lg border border-brand-yellow/40"
         />
 
         {/* Hostel + Room */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-
           <select
             name="hostelType"
             value={form.hostelType}
             onChange={handleChange}
-            className="bg-slate-800 p-3 rounded-xl"
+            className="bg-brand-yellow/10 p-3 rounded-xl border border-brand-yellow/40"
           >
             <option value="">Hostel Type</option>
             <option value="Boys Hostel">Boys Hostel</option>
             <option value="Girls Hostel">Girls Hostel</option>
           </select>
-
           <input
             type="text"
             name="roomNumber"
             value={form.roomNumber}
             onChange={handleChange}
             placeholder="Room Number"
-            className="bg-slate-800 p-3 rounded-xl"
+            className="bg-brand-yellow/10 p-3 rounded-xl border border-brand-yellow/40"
           />
-
         </div>
 
         {/* Course Branch Semester */}
         <div className="grid grid-cols-3 gap-3">
-
           <select
             name="course"
             value={form.course}
             onChange={handleChange}
-            className="bg-slate-800 p-3 rounded-lg"
+            className="bg-brand-yellow/10 p-3 rounded-lg border border-brand-yellow/40"
           >
             <option value="">Course</option>
             <option>BCA</option>
@@ -123,7 +117,7 @@ export default function ComplaintForm({ refresh }) {
             name="branch"
             value={form.branch}
             onChange={handleChange}
-            className="bg-slate-800 p-3 rounded-lg"
+            className="bg-brand-yellow/10 p-3 rounded-lg border border-brand-yellow/40"
           >
             <option value="">Branch</option>
             <option>Computer Science</option>
@@ -140,7 +134,7 @@ export default function ComplaintForm({ refresh }) {
             name="semester"
             value={form.semester}
             onChange={handleChange}
-            className="bg-slate-800 p-3 rounded-lg"
+            className="bg-brand-yellow/10 p-3 rounded-lg border border-brand-yellow/40"
           >
             <option value="">Semester</option>
             <option>1</option>
@@ -160,7 +154,7 @@ export default function ComplaintForm({ refresh }) {
           name="category"
           value={form.category}
           onChange={handleChange}
-          className="bg-slate-800 p-3 rounded-lg"
+          className="bg-brand-yellow/10 p-3 rounded-lg border border-brand-yellow/40"
         >
           <option>Electrical</option>
           <option>Furniture</option>
@@ -174,7 +168,7 @@ export default function ComplaintForm({ refresh }) {
           value={form.description}
           onChange={handleChange}
           placeholder="Describe the issue in detail..."
-          className="w-full bg-slate-800 p-3 rounded-lg"
+          className="w-full bg-brand-yellow/10 p-3 rounded-lg border border-brand-yellow/40"
         />
 
         {/* Priority */}
@@ -182,7 +176,7 @@ export default function ComplaintForm({ refresh }) {
           name="priority"
           value={form.priority}
           onChange={handleChange}
-          className="bg-slate-800 p-3 rounded-lg"
+          className="bg-brand-yellow/10 p-3 rounded-lg border border-brand-yellow/40"
         >
           <option>Low</option>
           <option>Medium</option>
@@ -190,7 +184,7 @@ export default function ComplaintForm({ refresh }) {
         </select>
 
         {/* Submit */}
-        <button className="w-full bg-gradient-to-r from-teal-400 to-blue-500 p-3 rounded-lg font-semibold">
+        <button className="w-full bg-gradient-to-r from-brand-yellow to-brand-orange p-3 rounded-lg font-semibold text-white hover:opacity-90">
           ✈ Submit Complaint
         </button>
 

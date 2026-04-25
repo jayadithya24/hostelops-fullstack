@@ -10,14 +10,14 @@ export default function ComplaintCard({ complaint }) {
   };
 
   const statusColor = {
-    pending: "bg-yellow-500/20 text-yellow-400",
+    pending: "bg-[#FFE9A7]/60 text-[#FFC300]",
     "in progress": "bg-blue-500/20 text-blue-400",
     resolved: "bg-green-500/20 text-green-400"
   };
 
   const priorityColor = {
     low: "bg-green-500/20 text-green-400",
-    medium: "bg-yellow-500/20 text-yellow-400",
+    medium: "bg-[#FFE9A7]/60 text-[#FFC300]",
     high: "bg-red-500/20 text-red-400"
   };
 

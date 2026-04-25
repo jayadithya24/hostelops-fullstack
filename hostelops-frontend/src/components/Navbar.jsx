@@ -13,17 +13,17 @@ export default function Navbar(){
 
   return(
 
-    <header className="sticky top-0 z-50 bg-slate-900 border-b border-slate-800">
+    <header className="sticky top-0 z-50 bg-white border-b border-brand-yellow">
 
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
         <div className="flex items-center gap-3">
 
-          <div className="bg-teal-500/20 p-2 rounded-lg text-teal-400 text-xl">
+          <div className="bg-brand-yellow/30 p-2 rounded-lg text-brand-orange text-xl">
             📋
           </div>
 
-          <h1 className="text-xl font-semibold text-white">
+          <h1 className="text-xl font-semibold text-brand-dark">
             HostelOps Complaint System
           </h1>
 
@@ -31,13 +31,13 @@ export default function Navbar(){
 
         <div className="flex items-center gap-6">
 
-          <span className="text-gray-400">
+          <span className="text-brand-dark/60">
             {role === "admin" ? "Admin View" : "Student Panel"}
           </span>
 
           <button
             onClick={logout}
-            className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg"
+            className="bg-brand-orange hover:bg-brand-yellow text-white px-4 py-2 rounded-lg transition"
           >
             Logout
           </button>

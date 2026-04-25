@@ -34,7 +34,7 @@ export default function Dashboard() {
 
   return (
 
-    <div className="min-h-screen bg-slate-950 text-white">
+    <div className="min-h-screen bg-brand-yellow/10 text-brand-dark">
 
       <Navbar />
 
