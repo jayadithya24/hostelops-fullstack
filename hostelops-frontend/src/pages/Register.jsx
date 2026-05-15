@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Notification from "../components/Notification";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -13,6 +14,7 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [notification, setNotification] = useState({ message: "", type: "error" });
 
   async function handleSubmit(e) {
 
@@ -36,19 +38,20 @@ export default function Register() {
       const data = await res.json();
 
       if (!res.ok) {
-        alert(data.message || "Registration failed");
+        setNotification({ message: data.message || "Registration failed", type: "error" });
         setLoading(false);
         return;
       }
 
-      alert("Registration successful! Please login.");
-
-      navigate("/login");
+      setNotification({ message: "Registration successful! Please login.", type: "success" });
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
 
     } catch (error) {
 
       console.error("Register Error:", error);
-      alert("Server error. Please try again.");
+      setNotification({ message: "Server error. Please try again.", type: "error" });
 
     }
 
@@ -56,87 +59,90 @@ export default function Register() {
   }
 
   return (
-
-
-    <div className="min-h-screen flex items-center justify-center bg-brand-yellow/10 text-brand-dark px-4">
-      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg border border-brand-yellow/40">
-        <Link
-          to="/"
-          className="text-brand-orange hover:text-brand-dark text-sm mb-4 inline-block"
-        >
-          ← Back to Home
-        </Link>
-        <div className="text-center mb-6">
-          <h1 className="text-3xl font-extrabold text-brand-dark">
-            Hostel<span className="text-brand-orange">Ops</span>
-          </h1>
-          <div className="w-16 h-1 bg-brand-yellow mx-auto mt-2 rounded"></div>
-        </div>
-        <h3 className="text-xl font-bold text-center mb-2">Create your account</h3>
-        <p className="text-brand-dark/60 text-center mb-6">
-          Register to submit and manage complaints
-        </p>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="text"
-            placeholder="Full Name"
-            required
-            className="w-full p-3 rounded-lg bg-brand-yellow/10 border border-brand-yellow/40 focus:outline-none focus:ring-2 focus:ring-brand-orange"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            type="email"
-            placeholder="Email address"
-            required
-            className="w-full p-3 rounded-lg bg-brand-yellow/10 border border-brand-yellow/40 focus:outline-none focus:ring-2 focus:ring-brand-orange"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <div className="relative">
+    <>
+      <Notification
+        message={notification.message}
+        type={notification.type}
+        onClose={() => setNotification({ ...notification, message: "" })}
+      />
+      <div className="min-h-screen flex items-center justify-center bg-brand-yellow/10 text-brand-dark px-4">
+        <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg border border-brand-yellow/40">
+          <Link
+            to="/"
+            className="text-brand-orange hover:text-brand-dark text-sm mb-4 inline-block"
+          >
+            ← Back to Home
+          </Link>
+          <div className="text-center mb-6">
+            <h1 className="text-3xl font-extrabold text-brand-dark">
+              Hostel<span className="text-brand-orange">Ops</span>
+            </h1>
+            <div className="w-16 h-1 bg-brand-yellow mx-auto mt-2 rounded"></div>
+          </div>
+          <h3 className="text-xl font-bold text-center mb-2">Create your account</h3>
+          <p className="text-brand-dark/60 text-center mb-6">
+            Register to submit and manage complaints
+          </p>
+          <form onSubmit={handleSubmit} className="space-y-4">
             <input
-              type={showPassword ? "text" : "password"}
-              placeholder="Password"
+              type="text"
+              placeholder="Full Name"
               required
               className="w-full p-3 rounded-lg bg-brand-yellow/10 border border-brand-yellow/40 focus:outline-none focus:ring-2 focus:ring-brand-orange"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
+            <input
+              type="email"
+              placeholder="Email address"
+              required
+              className="w-full p-3 rounded-lg bg-brand-yellow/10 border border-brand-yellow/40 focus:outline-none focus:ring-2 focus:ring-brand-orange"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                required
+                className="w-full p-3 rounded-lg bg-brand-yellow/10 border border-brand-yellow/40 focus:outline-none focus:ring-2 focus:ring-brand-orange"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-brand-orange hover:text-brand-dark"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
             <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-brand-orange hover:text-brand-dark"
+              type="submit"
+              disabled={loading}
+              className="w-full bg-gradient-to-r from-brand-yellow to-brand-orange py-3 rounded-lg font-semibold text-white transition flex items-center justify-center gap-2 hover:opacity-90 disabled:opacity-70"
             >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
+              {loading ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-brand-orange border-t-transparent rounded-full animate-spin"></div>
+                  Registering...
+                </>
+              ) : (
+                "Register"
+              )}
             </button>
-          </div>
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-gradient-to-r from-brand-yellow to-brand-orange py-3 rounded-lg font-semibold text-white transition flex items-center justify-center gap-2 hover:opacity-90 disabled:opacity-70"
-          >
-            {loading ? (
-              <>
-                <div className="w-5 h-5 border-2 border-brand-orange border-t-transparent rounded-full animate-spin"></div>
-                Registering...
-              </>
-            ) : (
-              "Register"
-            )}
-          </button>
-        </form>
-        <p className="text-center text-brand-dark/60 mt-6">
-          Already have an account?{" "}
-          <Link
-            to="/login"
-            className="text-brand-orange hover:underline"
-          >
-            Login here
-          </Link>
-        </p>
+          </form>
+          <p className="text-center text-brand-dark/60 mt-6">
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="text-brand-orange hover:underline"
+            >
+              Login here
+            </Link>
+          </p>
+        </div>
       </div>
-    </div>
-
+    </>
   );
-
 }

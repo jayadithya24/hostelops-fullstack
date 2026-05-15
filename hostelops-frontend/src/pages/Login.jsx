@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Notification from "../components/Notification";
 import { useNavigate, Link } from "react-router-dom";
 import { loginUser } from "../api/api";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -16,6 +17,7 @@ export default function Login() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [notification, setNotification] = useState({ message: "", type: "error" });
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -54,20 +56,25 @@ export default function Login() {
         }
 
       } else {
-        alert(res.message || "Login failed");
+        setNotification({ message: res.message || "Login failed", type: "error" });
       }
 
     } catch (err) {
       console.log(err);
-      alert("Login failed");
+      setNotification({ message: "Login failed", type: "error" });
     }
 
     setLoading(false);
   }
 
   return (
-
-    <div className="min-h-screen flex items-center justify-center bg-brand-yellow/10 text-brand-dark px-4">
+    <>
+      <Notification
+        message={notification.message}
+        type={notification.type}
+        onClose={() => setNotification({ ...notification, message: "" })}
+      />
+      <div className="min-h-screen flex items-center justify-center bg-brand-yellow/10 text-brand-dark px-4">
 
       <div className="w-full max-w-md">
 
@@ -193,7 +200,7 @@ export default function Login() {
 
       </div>
 
-    </div>
-
+      </div>
+    </>
   );
 }
